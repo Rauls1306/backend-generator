@@ -5,10 +5,22 @@ from generator import generate_article
 
 app = FastAPI()
 
+# CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Puedes cambiar "*" por ["https://frontend-generador-one.vercel.app"] si quieres limitarlo
+    allow_origins=["*"],  # Puedes limitar a ["https://frontend-generador-one.vercel.app"]
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Ruta raíz
+@app.get("/")
+def root():
+    return {"message": "API del generador de artículos funcionando."}
+
+# Ruta para generar el artículo
+@app.post("/generar")
+def generar_articulo(tema: str, nivel: str = "Scopus"):
+    ruta_archivo = generate_article(tema, nivel)
+    return FileResponse(ruta_archivo, filename="articulo_generado.docx")
