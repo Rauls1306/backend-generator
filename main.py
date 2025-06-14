@@ -5,14 +5,9 @@ from generator import generate_article
 
 app = FastAPI()
 
-# CONFIGURACIÓN CORS FUNCIONAL
-origins = [
-    "https://frontend-generador-one.vercel.app"
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -20,7 +15,7 @@ app.add_middleware(
 
 @app.get("/")
 def root():
-    return {"message": "API del generador de artículos funcionando."}
+    return {"message": "API funcionando"}
 
 @app.post("/generar")
 def generar_articulo(tema: str, nivel: str = "Scopus"):
