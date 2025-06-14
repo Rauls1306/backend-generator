@@ -1,4 +1,4 @@
 fastapi
 uvicorn
 python-docx
-openai
+openai==0.28
