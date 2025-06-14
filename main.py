@@ -5,10 +5,9 @@ from generator import generate_article
 
 app = FastAPI()
 
-# CORS CORRECTO
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://frontend-generador-one.vercel.app"],  # Aquí se especifica tu dominio exacto
+    allow_origins=["*"],  # Usa * para probar, luego puedes restringir
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
