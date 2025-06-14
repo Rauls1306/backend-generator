@@ -1,3 +1,5 @@
+import os
+os.system("pip install openai==0.28 --upgrade")
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
