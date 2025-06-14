@@ -3,7 +3,8 @@ from docx import Document
 from datetime import datetime
 import os
 
-openai.api_key = "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"
+import os
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def gpt(prompt):
     try:
