@@ -18,7 +18,7 @@ def gpt(prompt):
         return f"Error al generar contenido: {str(e)}"
 
 def extract_variables(titulo):
-    prompt = f"Del siguiente título académico: {titulo}, extrae dos variables clave, en minúscula, sin comillas, sin numeración, en salto de línea."
+    prompt = f"Del siguiente título académico: {titulo}, extrae dos variables, una vinculada a la profesión y otra al contexto, escritas sin comillas ni numeración, en minúscula, separadas por salto de línea."
     resultado = gpt(prompt)
     return [v.strip() for v in resultado.split("\n") if v.strip()]
 
@@ -30,75 +30,73 @@ def generate_article(tema, nivel):
     doc.add_paragraph("")
 
     # TÍTULO
-    prompt_titulo = f"A partir del siguiente texto informal: '{tema}', genera un título académico formal interpretado semánticamente. No uses comillas ni repitas frases textuales."
+    prompt_titulo = (
+        f"A partir del siguiente texto informal: '{tema}', genera un título académico formal sin repetir palabras textuales del input. "
+        f"Debe combinar una variable de la carrera (profesión/área técnica) y otra del entorno o sector (problema/contexto/lugar). "
+        f"Ejemplo: si el input es 'soy ingeniero mecánico y trabajo en un puerto', el título podría ser 'Optimización de maquinaria pesada en operaciones logísticas portuarias'. "
+        f"No uses comillas, ni fórmulas tipo 'un estudio sobre...'."
+    )
     titulo = gpt(prompt_titulo)
     doc.add_heading(titulo, level=1)
 
     # CONTEXTO GENERAL
-    prompt_contexto = (
-        "Hazme un párrafo como este: La educación superior ha cobrado una relevancia estratégica en los últimos años al convertirse en uno de los principales pilares para impulsar el desarrollo económico, social y cultural de los países. "
-        "Su expansión y diversificación responden a las exigencias de una sociedad cada vez más compleja, interconectada y en constante transformación. En este escenario, las universidades desempeñan un rol central como generadoras de conocimiento, "
-        "formadoras de capital humano y promotoras de innovación. No obstante, este protagonismo también implica desafíos significativos vinculados con la equidad en el acceso, la calidad del proceso formativo y la pertinencia de los programas ofrecidos. "
-        "En consecuencia, surge la necesidad de analizar con mayor profundidad las dinámicas que configuran el quehacer universitario y sus implicancias en el marco de un modelo educativo centrado en el aprendizaje, la responsabilidad social y la excelencia académica. "
-        f"Ahora redacta uno así, sobre el tema: {titulo}"
-    )
-    doc.add_paragraph(gpt(prompt_contexto))
-
-    # PÁRRAFOS CUANTITATIVOS
     doc.add_paragraph(gpt(
-        f"A nivel mundial, redacta un párrafo académico con exactamente tres datos cuantitativos: uno porcentual, uno absoluto y uno comparativo, sobre el tema: {titulo}. Añade un dato cualitativo. No menciones instituciones, encuestas ni fuentes."
-    ))
-    doc.add_paragraph(gpt(
-        f"En América Latina, redacta otro párrafo con tres datos cuantitativos distintos (máximo un porcentaje) y una afirmación cualitativa sobre el mismo tema: {titulo}. No uses citas, estudios ni menciones a organismos."
-    ))
-    doc.add_paragraph(gpt(
-        f"A nivel nacional en Perú, redacta un párrafo con tres datos cuantitativos combinados (uno porcentual, uno absoluto y uno comparativo) y una idea cualitativa. Prohibido usar frases como 'según estudios', ni nombres de instituciones."
+        f"Hazme un párrafo como este: La educación superior ha cobrado una relevancia estratégica en los últimos años... Redacta igual pero sobre el tema: {titulo}"
     ))
 
-    # PROBLEMA CAUSAS CONSECUENCIAS
+    # TRES PÁRRAFOS CUANTITATIVOS
     doc.add_paragraph(gpt(
-        f"Redacta un solo párrafo de máximo 100 palabras, en prosa continua tipo SCOPUS Q1, sobre el problema, las causas y consecuencias del tema: {titulo}. Sin frases metatextuales ni conectores de cierre."
+        f"A nivel mundial, redacta un párrafo académico con tres datos cuantitativos exactos: uno porcentual, uno absoluto y uno comparativo. Añade un dato cualitativo. No pongas fuentes ni menciones institucionales."
+    ))
+    doc.add_paragraph(gpt(
+        f"En América Latina, escribe otro párrafo con tres datos cuantitativos combinados sobre el mismo tema. Máximo un dato porcentual. Incluye también una afirmación cualitativa relevante, sin citas."
+    ))
+    doc.add_paragraph(gpt(
+        f"A nivel nacional en Perú, redacta un párrafo con tres datos reales: uno porcentual, uno absoluto y uno comparativo, y complementa con un dato cualitativo. No incluyas ninguna institución, fuente ni encuesta."
     ))
 
-    # JUSTIFICACIÓN (solo un párrafo, 100 palabras, comienza con “Se justifica”)
+    # PROBLEMA
     doc.add_paragraph(gpt(
-        f"Se justifica la realización de este estudio debido a la importancia del tema: {titulo}. Redacta una justificación formal, coherente, de unas 100 palabras, como en el modelo del Word. Sin comillas."
+        f"Redacta un solo párrafo fluido de máximo 100 palabras sobre el problema, causas y consecuencias vinculadas al tema: {titulo}. No uses frases metatextuales ni conectores de cierre."
+    ))
+
+    # JUSTIFICACIÓN
+    doc.add_paragraph(gpt(
+        f"Se justifica la realización de este estudio debido a la importancia del tema: {titulo}. Redacta un solo párrafo de aproximadamente 100 palabras, sin subtítulos ni comillas, siguiendo el estilo del modelo Word."
     ))
 
     # MARCO TEÓRICO
     doc.add_heading("Marco teórico", level=2)
-
     doc.add_paragraph(gpt(
-        f"Redacta un párrafo académico de 200 palabras sobre una teoría relacionada con el título: {titulo}. Incluye el nombre de la teoría, su autor o padre, el contexto histórico y la explicación. No uses frases como 'uno de los marcos más relevantes'."
+        f"Redacta un párrafo académico de 200 palabras con el nombre de una teoría, su autor o padre, contexto histórico y explicación detallada. Prohibido usar frases como 'una de las teorías más relevantes'."
+    ))
+    doc.add_paragraph(gpt(
+        f"Redacta un segundo párrafo de teoría (200 palabras) iniciando con un conector fluido desde el anterior. Debe incluir otra teoría con nombre y autor. No usar 'además de la teoría de...' si no fue mencionada antes."
     ))
 
-    doc.add_paragraph(gpt(
-        f"Redacta un segundo párrafo de teoría, de 200 palabras, que inicie con un conector fluido desde el anterior. Debe contener otra teoría distinta con su nombre explícito y autor. Nada de 'además de la teoría de…' si no se ha mencionado antes."
-    ))
-
-    # VARIABLES (preámbulo, sin subtítulos, enlazadas)
+    # VARIABLES (con preámbulo interno y conectores entre variables)
     variables = extract_variables(titulo)
     var1 = variables[0] if len(variables) > 0 else "variable uno"
     var2 = variables[1] if len(variables) > 1 else "variable dos"
 
     doc.add_paragraph(gpt(
-        f"A partir de lo desarrollado previamente, introduce en prosa la primera variable {var1}, comenzando con un preámbulo académico antes de definirla. Redacta su definición de forma integrada con el texto anterior, sin subtítulos ni comillas."
+        f"Redacta un primer párrafo de la variable {var1}, empezando con un preámbulo académico dentro del mismo párrafo, seguido de la definición de la variable. No uses frases como 'la variable es'."
     ))
     doc.add_paragraph(gpt(
-        f"Redacta el segundo párrafo sobre {var1}, detallando sus características, dimensiones o elementos constitutivos, enlazando naturalmente desde el anterior."
+        f"Redacta el segundo párrafo de {var1}, detallando sus características o dimensiones en prosa académica fluida."
     ))
     doc.add_paragraph(gpt(
-        f"Redacta el tercer párrafo sobre {var1}, explicando su relevancia práctica, académica y social en el contexto del fenómeno abordado en el título: {titulo}."
+        f"Redacta el tercer párrafo de {var1}, explicando su relevancia práctica, académica o social, sin conectores de cierre."
     ))
 
     doc.add_paragraph(gpt(
-        f"En consonancia con lo anterior, introduce la segunda variable {var2} con una oración conectora. Luego desarrolla su definición en un párrafo fluido, sin etiquetas ni frases metatextuales."
+        f"En relación con lo anterior, introduce el primer párrafo sobre la variable {var2}, con un conector fluido desde {var1}. Incluye su definición sin subtítulos ni frases metatextuales."
     ))
     doc.add_paragraph(gpt(
-        f"Redacta el segundo párrafo sobre {var2}, describiendo sus características o dimensiones de manera clara y académica, enlazada desde el párrafo anterior."
+        f"Redacta el segundo párrafo de {var2}, describiendo sus dimensiones, tipos o elementos constitutivos. Mantén continuidad textual con el anterior."
     ))
     doc.add_paragraph(gpt(
-        f"Redacta el tercer párrafo sobre {var2}, destacando su implicancia práctica, teórica o contextual en relación al título generado: {titulo}."
+        f"Redacta el tercer párrafo de {var2}, destacando su implicancia práctica y conceptual en el fenómeno tratado en el título: {titulo}."
     ))
 
     filename = f"/tmp/articulo_{datetime.now().strftime('%Y%m%d%H%M%S')}.docx"
