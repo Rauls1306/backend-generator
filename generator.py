@@ -42,34 +42,30 @@ def generate_article(tema, nivel):
     titulo = gpt(prompt_titulo)
     doc.add_heading(titulo, level=1)
 
-    # CONTEXTO GENERAL (párrafo modelo)
+    # CONTEXTO
     doc.add_paragraph(gpt(
-        f"Hazme un párrafo como este: La educación superior ha cobrado una relevancia estratégica en los últimos años al convertirse en uno de los principales pilares para impulsar el desarrollo económico, social y cultural de los países. "
-        f"Su expansión y diversificación responden a las exigencias de una sociedad cada vez más compleja, interconectada y en constante transformación. En este escenario, las universidades desempeñan un rol central como generadoras de conocimiento, "
-        f"formadoras de capital humano y promotoras de innovación. No obstante, este protagonismo también implica desafíos significativos vinculados con la equidad en el acceso, la calidad del proceso formativo y la pertinencia de los programas ofrecidos. "
-        f"En consecuencia, surge la necesidad de analizar con mayor profundidad las dinámicas que configuran el quehacer universitario y sus implicancias en el marco de un modelo educativo centrado en el aprendizaje, la responsabilidad social y la excelencia académica. "
-        f"Redacta un párrafo como este, pero sobre el tema: {titulo}."
+        f"Hazme un párrafo como este: La educación superior ha cobrado una relevancia estratégica en los últimos años... Redacta uno igual sobre el tema: {titulo}."
     ))
 
-    # PÁRRAFO MUNDIAL
+    # MUNDIAL
     doc.add_paragraph(gpt(
         f"A nivel mundial, redacta un párrafo académico con tres datos cuantitativos (uno porcentual, uno absoluto y uno comparativo) más un dato cualitativo, todos relacionados con el tema: {titulo}. "
         f"No menciones instituciones ni utilices frases como 'según estudios'."
     ))
 
-    # PÁRRAFO LATINOAMÉRICA
+    # LATAM
     doc.add_paragraph(gpt(
         f"En América Latina, redacta otro párrafo con tres datos cuantitativos combinados más una afirmación cualitativa. "
         f"Evita menciones institucionales y mantén el tema centrado en: {titulo}."
     ))
 
-    # PÁRRAFO PERÚ
+    # PERÚ
     doc.add_paragraph(gpt(
         f"A nivel nacional en Perú, redacta un párrafo con tres datos (porcentual, absoluto, comparativo) y una afirmación cualitativa sobre el tema: {titulo}. "
         f"Prohibido usar nombres de organizaciones o estudios."
     ))
 
-    # PROBLEMA / CAUSAS / CONSECUENCIAS
+    # PROBLEMA
     doc.add_paragraph(gpt(
         f"Redacta un único párrafo de máximo 100 palabras sobre el problema, causas y consecuencias del siguiente tema: {titulo}. "
         f"Sin conectores de cierre, sin frases metatextuales, solo redacción académica fluida."
@@ -84,14 +80,12 @@ def generate_article(tema, nivel):
     # MARCO TEÓRICO
     doc.add_heading("Marco teórico", level=2)
 
-    # TEORÍA 1 – 200 palabras
     doc.add_paragraph(gpt(
         f"Redacta un párrafo de aproximadamente 200 palabras sobre una teoría relacionada con el título: {titulo}. "
         f"Debe incluir una oración de preámbulo fluido, el nombre de la teoría, su autor o creador, el contexto histórico y una explicación completa. "
         f"No uses frases genéricas ni estructuras metatextuales."
     ))
 
-    # TEORÍA 2 – 200 palabras con conector
     doc.add_paragraph(gpt(
         f"Redacta otro párrafo de 200 palabras sobre una segunda teoría relacionada con el mismo tema: {titulo}. "
         f"Inicia con un conector lógico desde el párrafo anterior. Incluye nombre de la teoría, autor y explicación. No contradigas la primera teoría."
@@ -102,26 +96,28 @@ def generate_article(tema, nivel):
     concepto1 = conceptos[0] if len(conceptos) > 0 else "concepto técnico"
     concepto2 = conceptos[1] if len(conceptos) > 1 else "concepto contextual"
 
-    # CONCEPTO 1 – 3 párrafos
+    # CONCEPTO 1 – PÁRRAFO 1 (con preámbulo)
     doc.add_paragraph(gpt(
-        f"A partir del desarrollo anterior, redacta el primer párrafo sobre '{concepto1}', incluyendo un preámbulo integrado y su definición. No usar la palabra 'variable'."
-    ))
-    doc.add_paragraph(gpt(
-        f"Redacta un segundo párrafo sobre '{concepto1}', explicando dimensiones, tipos o aspectos clave, evitando repetir la frase de inicio del anterior."
-    ))
-    doc.add_paragraph(gpt(
-        f"Redacta un tercer párrafo sobre '{concepto1}', destacando su implicancia académica, técnica o social. Sin conectores de cierre."
+        f"Redacta el primer párrafo sobre '{concepto1}', comenzando con un preámbulo dentro del mismo párrafo, seguido de su definición precisa. "
+        f"No uses la palabra 'variable'. Usa prosa académica, sin frases repetitivas ni de cierre."
     ))
 
-    # CONCEPTO 2 – CORREGIDO: conector + sin repetición léxica
+    # CONCEPTO 1 – PÁRRAFO 2
     doc.add_paragraph(gpt(
-        f"En conexión con el concepto anterior, redacta el primer párrafo sobre '{concepto2}', iniciando con un conector, integrando su definición en tono académico sin repetir estructuras previas."
+        f"Redacta el segundo párrafo sobre '{concepto1}', detallando sus características, componentes o dimensiones. "
+        f"No repetir la misma frase inicial del párrafo anterior. Evita conclusiones."
     ))
+
+    # CONCEPTO 1 – PÁRRAFO 3
     doc.add_paragraph(gpt(
-        f"Redacta el segundo párrafo sobre '{concepto2}', desarrollando sus características o dimensiones con una construcción sintáctica diferente a la anterior. No comenzar con el mismo nombre."
+        f"Redacta el tercer párrafo sobre '{concepto1}', explicando su relevancia práctica, académica o profesional. "
+        f"Evita conectar con frases tipo 'en resumen' o 'por lo tanto'."
     ))
+
+    # CONCEPTO 2 – TRES PÁRRAFOS CON PROMPT DEFINIDO
     doc.add_paragraph(gpt(
-        f"Redacta el tercer párrafo sobre '{concepto2}' resaltando su relevancia académica o social. Empieza con una nueva estructura sin repetir inicios previos, sin usar conectores de cierre."
+        f"Redacta 3 párrafos sobre el concepto '{concepto2}' c/u de 100 palabras, que al inicio c/u tenga un conector de adición y que el 2 y 3er párrafo no mencionen el nombre del concepto '{concepto2}' en la primera oración, "
+        f"a partir de la 2da sí se puede. Que entre los 3 párrafos se hable de definición, características, tipos, etc."
     ))
 
     # GUARDAR DOC
