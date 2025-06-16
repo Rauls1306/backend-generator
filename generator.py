@@ -102,39 +102,26 @@ def generate_article(tema, nivel):
     concepto1 = conceptos[0] if len(conceptos) > 0 else "concepto técnico"
     concepto2 = conceptos[1] if len(conceptos) > 1 else "concepto contextual"
 
-    # CONCEPTO 1 – PÁRRAFO 1 (con preámbulo interno)
+    # CONCEPTO 1 – 3 párrafos
     doc.add_paragraph(gpt(
-        f"Redacta el primer párrafo sobre '{concepto1}', comenzando con un preámbulo dentro del mismo párrafo, seguido de su definición precisa. "
-        f"No uses la palabra 'variable'. Usa prosa académica, sin frases repetitivas ni de cierre."
+        f"A partir del desarrollo anterior, redacta el primer párrafo sobre '{concepto1}', incluyendo un preámbulo integrado y su definición. No usar la palabra 'variable'."
+    ))
+    doc.add_paragraph(gpt(
+        f"Redacta un segundo párrafo sobre '{concepto1}', explicando dimensiones, tipos o aspectos clave, evitando repetir la frase de inicio del anterior."
+    ))
+    doc.add_paragraph(gpt(
+        f"Redacta un tercer párrafo sobre '{concepto1}', destacando su implicancia académica, técnica o social. Sin conectores de cierre."
     ))
 
-    # CONCEPTO 1 – PÁRRAFO 2
+    # CONCEPTO 2 – CORREGIDO: conector + sin repetición léxica
     doc.add_paragraph(gpt(
-        f"Redacta el segundo párrafo sobre '{concepto1}' detallando sus características, componentes o dimensiones. "
-        f"No repetir la misma frase inicial del párrafo anterior. Evita conclusiones."
+        f"En conexión con el concepto anterior, redacta el primer párrafo sobre '{concepto2}', iniciando con un conector, integrando su definición en tono académico sin repetir estructuras previas."
     ))
-
-    # CONCEPTO 1 – PÁRRAFO 3
     doc.add_paragraph(gpt(
-        f"Redacta el tercer párrafo sobre '{concepto1}' explicando su relevancia práctica, académica o profesional. "
-        f"Evita conectar con frases tipo 'en resumen' o 'por lo tanto'."
+        f"Redacta el segundo párrafo sobre '{concepto2}', desarrollando sus características o dimensiones con una construcción sintáctica diferente a la anterior. No comenzar con el mismo nombre."
     ))
-
-    # CONCEPTO 2 – PÁRRAFO 1 (con conector desde anterior)
     doc.add_paragraph(gpt(
-        f"En conexión con el concepto anterior, redacta el primer párrafo sobre '{concepto2}', incluyendo su definición completa, sin usar frases de conclusión ni etiquetas metatextuales."
-    ))
-
-    # CONCEPTO 2 – PÁRRAFO 2
-    doc.add_paragraph(gpt(
-        f"Redacta el segundo párrafo sobre '{concepto2}' explicando sus dimensiones, características o manifestaciones. "
-        f"No repetir la estructura del párrafo anterior."
-    ))
-
-    # CONCEPTO 2 – PÁRRAFO 3
-    doc.add_paragraph(gpt(
-        f"Redacta el tercer párrafo sobre '{concepto2}' destacando su implicancia práctica o contextual, vinculada al tema central: {titulo}. "
-        f"No uses conectores de cierre."
+        f"Redacta el tercer párrafo sobre '{concepto2}' resaltando su relevancia académica o social. Empieza con una nueva estructura sin repetir inicios previos, sin usar conectores de cierre."
     ))
 
     # GUARDAR DOC
