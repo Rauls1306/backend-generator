@@ -71,10 +71,10 @@ def generate_article(tema, nivel):
         f"Sin conectores de cierre, sin frases metatextuales, solo redacción académica fluida."
     ))
 
-    # JUSTIFICACIÓN con "se justifica sí o sí"
+    # JUSTIFICACIÓN
     doc.add_paragraph(gpt(
         f"Se justifica sí o sí la realización de este estudio debido a la importancia del tema: {titulo}. "
-        f"Redacta un solo párrafo de unas 100 palabras en estilo Scopus, sin frases conclusivas ni subtítulos."
+        f"Redacta un solo párrafo de unas 100 palabras en estilo Scopus, sin frases conclusivas, ni subtítulos."
     ))
 
     # MARCO TEÓRICO
@@ -91,30 +91,35 @@ def generate_article(tema, nivel):
         f"Inicia con un conector lógico desde el párrafo anterior. Incluye nombre de la teoría, autor y explicación. No contradigas la primera teoría."
     ))
 
-    # CONCEPTOS
+    # EXTRAER CONCEPTOS
     conceptos = extract_concepts(titulo)
     concepto1 = conceptos[0] if len(conceptos) > 0 else "concepto técnico"
     concepto2 = conceptos[1] if len(conceptos) > 1 else "concepto contextual"
 
-    # CONCEPTO 1 – con inicios distintos
+    # CONCEPTO 1 – PÁRRAFO 1
     doc.add_paragraph(gpt(
-        f"Iniciando con una contextualización académica, redacta el primer párrafo sobre '{concepto1}' integrando su definición y naturaleza. "
-        f"No usar la palabra 'variable'."
-    ))
-    doc.add_paragraph(gpt(
-        f"Desde una perspectiva estructural, desarrolla el segundo párrafo sobre '{concepto1}', explicando sus características o dimensiones relevantes."
-    ))
-    doc.add_paragraph(gpt(
-        f"En un nivel más aplicado, redacta el tercer párrafo sobre '{concepto1}', destacando su implicancia profesional, teórica o contextual en relación con el tema."
+        f"Redacta el primer párrafo sobre '{concepto1}', comenzando con un preámbulo dentro del mismo párrafo, seguido de su definición precisa. "
+        f"No uses la palabra 'variable'. Usa prosa académica, sin frases repetitivas ni de cierre."
     ))
 
-    # CONCEPTO 2 – con prompt exacto
+    # CONCEPTO 1 – PÁRRAFO 2
     doc.add_paragraph(gpt(
-        f"Redacta 3 párrafos sobre el concepto '{concepto2}' c/u de 100 palabras, que al inicio c/u tenga un conector de adición distinto y que el 2 y 3er párrafo no mencionen el nombre del concepto '{concepto2}' en la primera oración, "
-        f"a partir de la 2da sí se puede. Que entre los 3 párrafos se hable de definición, características, tipos, etc."
+        f"Redacta el segundo párrafo sobre '{concepto1}', detallando sus características, componentes o dimensiones. "
+        f"No repetir la misma frase inicial del párrafo anterior. Evita conclusiones."
     ))
 
-    # GUARDAR
+    # CONCEPTO 1 – PÁRRAFO 3
+    doc.add_paragraph(gpt(
+        f"Redacta el tercer párrafo sobre '{concepto1}', explicando su relevancia práctica, académica o profesional. "
+        f"Evita conectar con frases tipo 'en resumen' o 'por lo tanto'. No repitas el mismo inicio que en los párrafos anteriores."
+    ))
+
+    # CONCEPTO 2 – TRES PÁRRAFOS CON PROMPT EXACTO
+    doc.add_paragraph(gpt(
+        f"Redacta 3 párrafos sobre el concepto '{concepto2}' c/u de 100 palabras, que al inicio c/u tenga un conector de adición y que el 2 y 3er párrafo no mencionen el nombre del concepto '{concepto2}' en la primera oración, a partir de la 2da sí se puede. Que entre los 3 párrafos se hable de definición, características, tipos, etc."
+    ))
+
     filename = f"/tmp/articulo_{datetime.now().strftime('%Y%m%d%H%M%S')}.docx"
     doc.save(filename)
     return filename
+
