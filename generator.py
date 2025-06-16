@@ -1,7 +1,7 @@
 import openai
+import os
 from docx import Document
 from datetime import datetime
-import os
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
@@ -10,11 +10,11 @@ def gpt(prompt):
         response = openai.ChatCompletion.create(
             model="gpt-4",
             messages=[
-                {"role": "system", "content": "Eres un redactor académico SCOPUS Q1. Responde solo con el texto pedido, sin subtítulos ni encabezados. Usa estilo impersonal, académico, fluido."},
+                {"role": "system", "content": "Eres un redactor académico profesional experto en artículos científicos tipo Scopus Q1."},
                 {"role": "user", "content": prompt}
             ],
-            temperature=0.65,
-            max_tokens=1800
+            temperature=0.7,
+            max_tokens=2000
         )
         return response.choices[0].message.content.strip()
     except Exception as e:
@@ -23,70 +23,71 @@ def gpt(prompt):
 def generate_article(tema, nivel):
     doc = Document()
     doc.add_heading("Artículo generado automáticamente", 0)
-    doc.add_paragraph(f"Tema: {tema}")
+    doc.add_paragraph(f"Tema ingresado: {tema}")
     doc.add_paragraph(f"Nivel de indexación: {nivel}")
     doc.add_paragraph("")
 
-    titulo = gpt(f"Genera un título académico Scopus Q1, sin adornos, basado en el siguiente tema: {tema}")
+    # BLOQUE 0 – Generar TÍTULO desde tema libre
+    prompt_titulo = f"Genera un título académico formal a partir del siguiente texto informal o general, interpretándolo semánticamente y sin usar comillas: '{tema}'"
+    titulo = gpt(prompt_titulo)
     doc.add_heading(titulo, level=1)
 
-    doc.add_heading("Introducción", level=2)
+    # BLOQUE 1 – CONTEXTO
+    prompt_contexto = (
+        "Hazme un párrafo como este: La educación superior ha cobrado una relevancia estratégica en los últimos años al convertirse en uno de los principales pilares para impulsar el desarrollo económico, social y cultural de los países. "
+        "Su expansión y diversificación responden a las exigencias de una sociedad cada vez más compleja, interconectada y en constante transformación. En este escenario, las universidades desempeñan un rol central como generadoras de conocimiento, "
+        "formadoras de capital humano y promotoras de innovación. No obstante, este protagonismo también implica desafíos significativos vinculados con la equidad en el acceso, la calidad del proceso formativo y la pertinencia de los programas ofrecidos. "
+        "En consecuencia, surge la necesidad de analizar con mayor profundidad las dinámicas que configuran el quehacer universitario y sus implicancias en el marco de un modelo educativo centrado en el aprendizaje, la responsabilidad social y la excelencia académica."
+    )
+    doc.add_paragraph(gpt(prompt_contexto))
 
-    # ORDEN REAL DE LA INTRODUCCIÓN
+    # BLOQUE 2 – PROBLEMÁTICA MUNDIAL, LATAM, PERÚ
+    doc.add_paragraph(gpt(f"Redacta un párrafo académico con datos cuantitativos reales, sin citas, sobre la problemática mundial relacionada con el siguiente tema: {titulo}"))
+    doc.add_paragraph(gpt(f"Ahora redacta un párrafo con datos cuantitativos reales, sin citas ni instituciones, sobre esa misma problemática pero en América Latina."))
+    doc.add_paragraph(gpt(f"Finalmente, redacta un párrafo con datos cuantitativos reales, sin fuentes visibles ni citas, sobre esa problemática aplicada al Perú."))
 
-    # 1. Párrafo de contexto
-    doc.add_paragraph(gpt(
-        f"Redacta un párrafo tipo SCOPUS Q1 como el modelo: 'Hazme un párrafo como este…' contextualizando el tema: {tema}"
-    ))
+    # BLOQUE 3 – PROBLEMA, CAUSAS Y CONSECUENCIAS
+    prompt_problema = (
+        "Redacta un párrafo académico tipo Scopus Q1 sobre el problema, las causas y consecuencias del siguiente tema: "
+        f"{titulo}. No uses puntos seguidos ni separación entre frases, debe ser un párrafo fluido sin exceso de puntuación."
+    )
+    doc.add_paragraph(gpt(prompt_problema))
 
-    # 2. Problema mundial
-    doc.add_paragraph(gpt(
-        f"Redacta un párrafo con datos cuantitativos reales y actualizados sobre el problema de '{tema}' a nivel mundial, sin citas ni mención de instituciones."
-    ))
+    # BLOQUE 4 – JUSTIFICACIÓN
+    prompt_justificacion = (
+        f"Se justifica la realización de este estudio debido a la importancia y relevancia del siguiente tema: {titulo}. "
+        "Redacta un párrafo académico de aproximadamente 200 palabras, comenzando obligatoriamente con 'Se justifica'. "
+        "Debe tener tono Scopus Q1, destacar impacto educativo, pertinencia social, urgencia de abordaje e implicancias académicas."
+    )
+    doc.add_paragraph(gpt(prompt_justificacion))
 
-    # 3. Problema en América Latina
-    doc.add_paragraph(gpt(
-        f"Redacta un párrafo con datos cuantitativos reales y actuales sobre el problema de '{tema}' en América Latina. Estilo académico SCOPUS, sin fuentes visibles."
-    ))
+    # BLOQUE 5 – MARCO TEÓRICO: TEORÍAS
+    prompt_teoria1 = (
+        f"Redacta 200 palabras en prosa académica sobre una teoría adecuada relacionada con el tema '{titulo}', incluyendo fundador, contexto histórico y en qué consiste. "
+        "No pongas subtítulos ni identifiques la teoría como 'Teoría de…', solo texto corrido."
+    )
+    doc.add_paragraph(gpt(prompt_teoria1))
 
-    # 4. Problema en Perú
-    doc.add_paragraph(gpt(
-        f"Redacta un párrafo sobre el problema de '{tema}' en Perú, con datos cuantitativos reales pero sin citar autores ni instituciones."
-    ))
+    prompt_teoria2 = (
+        f"Redacta otro texto de 200 palabras sobre una segunda teoría distinta también relacionada con el tema '{titulo}', en el mismo formato. "
+        "No pongas encabezados ni identifiques explícitamente que se trata de una 'teoría'. Solo prosa fluida."
+    )
+    doc.add_paragraph(gpt(prompt_teoria2))
 
-    # 5. Problema, causas y consecuencias
-    doc.add_paragraph(gpt(
-        f"Redacta un párrafo SCOPUS Q1 que explique el problema de '{tema}' con sus causas y consecuencias. Texto fluido, sin listas."
-    ))
+    # BLOQUE 6 – MARCO TEÓRICO: VARIABLES
+    prompt_var1 = (
+        f"A partir del siguiente título, extrae la primera variable principal. Luego redacta tres párrafos académicos: (1) definición y conceptualización, "
+        "(2) características o dimensiones, (3) importancia en relación con el tema. Título: {titulo}"
+    )
+    doc.add_paragraph(gpt(prompt_var1))
 
-    # 6. Justificación
-    doc.add_paragraph(gpt(
-        f"Redacta un párrafo académico tipo SCOPUS que justifique la importancia del artículo sobre: {tema}. Estilo impersonal, convincente, sin adornos."
-    ))
+    prompt_var2 = (
+        f"Ahora haz lo mismo para una segunda variable relevante del título: {titulo}. Redacta tres párrafos: definición, características, y relevancia actual. "
+        "Todo en prosa continua, sin subtítulos."
+    )
+    doc.add_paragraph(gpt(prompt_var2))
 
-    # MARCO TEÓRICO
-    doc.add_heading("Marco teórico", level=2)
-
-    # Teoría 1
-    doc.add_paragraph(gpt(
-        "Redacta un texto de 200 palabras sobre la Teoría de la Calidad Educativa Universitaria, incluyendo autor principal, contexto histórico y explicación, en prosa."
-    ))
-
-    # Teoría 2
-    doc.add_paragraph(gpt(
-        "Redacta un texto de 200 palabras sobre la Teoría de la Docencia Universitaria, con autor destacado, época y aplicación académica. Solo texto en prosa."
-    ))
-
-    # Variable 1: competencias docentes universitarios
-    doc.add_paragraph(gpt(
-        "Redacta tres párrafos sobre la variable 'Competencias en docentes universitarios'. El primero con la definición, el segundo con características y el tercero con tipos."
-    ))
-
-    # Variable 2: educación superior de calidad
-    doc.add_paragraph(gpt(
-        "Redacta tres párrafos sobre la variable 'Educación superior de calidad'. El primero con la definición, el segundo con criterios y el tercero con enfoques actuales."
-    ))
-
+    # GUARDAR ARCHIVO
     filename = f"/tmp/articulo_{datetime.now().strftime('%Y%m%d%H%M%S')}.docx"
     doc.save(filename)
     return filename
