@@ -19,9 +19,8 @@ def gpt(prompt):
 
 def extract_concepts(titulo):
     prompt = (
-        f"Del siguiente título académico: {titulo}, extrae dos conceptos distintos. "
-        f"Uno debe ser técnico, derivado de la carrera o profesión, y el otro debe ser contextual, relacionado al entorno, problema o sector. "
-        f"Devuélvelos sin comillas, en minúsculas, separados por salto de línea."
+        f"Del siguiente título académico: {titulo}, extrae dos conceptos principales: uno técnico desde la profesión del usuario y otro contextual desde el entorno o sector involucrado. "
+        f"Devuélvelos sin comillas, en minúsculas, sin numeración, separados por salto de línea."
     )
     resultado = gpt(prompt)
     return [v.strip() for v in resultado.split("\n") if v.strip()]
@@ -36,61 +35,66 @@ def generate_article(tema, nivel):
 
     # TÍTULO
     prompt_titulo = (
-        f"A partir del siguiente texto informal: '{tema}', genera un título académico interpretado semánticamente. "
-        f"Debe contener una combinación entre un concepto técnico desde la carrera y otro contextual desde el entorno, sin repetir frases del input literal, sin comillas ni fórmulas genéricas."
+        f"A partir del siguiente input informal: '{tema}', genera un título académico formal con redacción Scopus. "
+        f"Debe contener una combinación entre un concepto técnico derivado de la carrera y otro del entorno. "
+        f"No repitas frases del input, no uses comillas ni fórmulas genéricas como 'un estudio sobre' o 'intersección entre'."
     )
     titulo = gpt(prompt_titulo)
     doc.add_heading(titulo, level=1)
 
-    # CONTEXTO GENERAL (PÁRRAFO MODELO)
+    # CONTEXTO GENERAL (párrafo modelo)
     doc.add_paragraph(gpt(
-        f"Hazme un párrafo como este: La educación superior ha cobrado una relevancia estratégica... "
-        f"Redacta uno igual sobre el tema: {titulo}."
+        f"Hazme un párrafo como este: La educación superior ha cobrado una relevancia estratégica en los últimos años al convertirse en uno de los principales pilares para impulsar el desarrollo económico, social y cultural de los países. "
+        f"Su expansión y diversificación responden a las exigencias de una sociedad cada vez más compleja, interconectada y en constante transformación. En este escenario, las universidades desempeñan un rol central como generadoras de conocimiento, "
+        f"formadoras de capital humano y promotoras de innovación. No obstante, este protagonismo también implica desafíos significativos vinculados con la equidad en el acceso, la calidad del proceso formativo y la pertinencia de los programas ofrecidos. "
+        f"En consecuencia, surge la necesidad de analizar con mayor profundidad las dinámicas que configuran el quehacer universitario y sus implicancias en el marco de un modelo educativo centrado en el aprendizaje, la responsabilidad social y la excelencia académica. "
+        f"Redacta un párrafo como este, pero sobre el tema: {titulo}."
     ))
 
     # PÁRRAFO MUNDIAL
     doc.add_paragraph(gpt(
-        f"A nivel mundial, redacta un párrafo académico con exactamente tres datos cuantitativos: uno porcentual, uno absoluto y uno comparativo. "
-        f"Incluye un dato cualitativo complementario. No menciones fuentes, instituciones ni encuestas. No uses frases como 'según estudios'."
+        f"A nivel mundial, redacta un párrafo académico con tres datos cuantitativos (uno porcentual, uno absoluto y uno comparativo) más un dato cualitativo, todos relacionados con el tema: {titulo}. "
+        f"No menciones instituciones ni utilices frases como 'según estudios'."
     ))
 
     # PÁRRAFO LATINOAMÉRICA
     doc.add_paragraph(gpt(
-        f"En América Latina, escribe un párrafo con tres datos cuantitativos reales, bien distribuidos (máximo un porcentaje) y un dato cualitativo. "
-        f"No usar conectores de cierre ni frases metatextuales."
+        f"En América Latina, redacta otro párrafo con tres datos cuantitativos combinados más una afirmación cualitativa. "
+        f"Evita menciones institucionales y mantén el tema centrado en: {titulo}."
     ))
 
     # PÁRRAFO PERÚ
     doc.add_paragraph(gpt(
-        f"A nivel nacional en Perú, redacta un párrafo con tres datos reales y una afirmación cualitativa. "
-        f"Evita frases como 'de acuerdo con' o 'en recientes investigaciones'."
+        f"A nivel nacional en Perú, redacta un párrafo con tres datos (porcentual, absoluto, comparativo) y una afirmación cualitativa sobre el tema: {titulo}. "
+        f"Prohibido usar nombres de organizaciones o estudios."
     ))
 
-    # PÁRRAFO PROBLEMA / CAUSAS / CONSECUENCIAS
+    # PROBLEMA / CAUSAS / CONSECUENCIAS
     doc.add_paragraph(gpt(
-        f"Redacta un único párrafo de máximo 100 palabras, en estilo Scopus Q1, sobre el problema, sus causas y consecuencias. "
-        f"No uses frases metatextuales ni conectores de cierre. Sin puntos cortantes."
+        f"Redacta un único párrafo de máximo 100 palabras sobre el problema, causas y consecuencias del siguiente tema: {titulo}. "
+        f"Sin conectores de cierre, sin frases metatextuales, solo redacción académica fluida."
     ))
 
-    # PÁRRAFO JUSTIFICACIÓN
+    # JUSTIFICACIÓN
     doc.add_paragraph(gpt(
         f"Se justifica la realización de este estudio debido a la importancia del tema: {titulo}. "
-        f"Redacta un solo párrafo de aproximadamente 100 palabras, en prosa continua, sin comillas ni frases de cierre como 'por ello' o 'finalmente'."
+        f"Redacta un solo párrafo de unas 100 palabras en estilo Scopus, sin frases conclusivas, ni subtítulos."
     ))
 
-    # SUBTÍTULO MARCO TEÓRICO
+    # MARCO TEÓRICO
     doc.add_heading("Marco teórico", level=2)
 
-    # TEORÍA 1
+    # TEORÍA 1 – 200 palabras
     doc.add_paragraph(gpt(
-        f"Redacta un párrafo académico de 200 palabras con el nombre explícito de una teoría, el autor o padre que la creó, el contexto histórico y su explicación completa. "
-        f"No digas 'una teoría relevante es…'. Usa prosa académica directa."
+        f"Redacta un párrafo de aproximadamente 200 palabras sobre una teoría relacionada con el título: {titulo}. "
+        f"Debe incluir una oración de preámbulo fluido, el nombre de la teoría, su autor o creador, el contexto histórico y una explicación completa. "
+        f"No uses frases genéricas ni estructuras metatextuales."
     ))
 
-    # TEORÍA 2
+    # TEORÍA 2 – 200 palabras con conector
     doc.add_paragraph(gpt(
-        f"Redacta otro párrafo académico de 200 palabras sobre una teoría distinta, enlazada con la anterior mediante un conector fluido. "
-        f"Debe contener nombre de teoría y autor también. No repetir fórmulas ni usar conectores de cierre."
+        f"Redacta otro párrafo de 200 palabras sobre una segunda teoría relacionada con el mismo tema: {titulo}. "
+        f"Inicia con un conector lógico desde el párrafo anterior. Incluye nombre de la teoría, autor y explicación. No contradigas la primera teoría."
     ))
 
     # EXTRAER CONCEPTOS
@@ -98,43 +102,42 @@ def generate_article(tema, nivel):
     concepto1 = conceptos[0] if len(conceptos) > 0 else "concepto técnico"
     concepto2 = conceptos[1] if len(conceptos) > 1 else "concepto contextual"
 
-    # CONCEPTO 1 – PÁRRAFO 1 (CON PREÁMBULO INTERNO)
+    # CONCEPTO 1 – PÁRRAFO 1 (con preámbulo interno)
     doc.add_paragraph(gpt(
-        f"A partir de lo anteriormente desarrollado, redacta el primer párrafo explicando el concepto '{concepto1}'. "
-        f"Comienza con un preámbulo dentro del mismo párrafo, seguido de su definición académica. No uses subtítulos ni la palabra 'variable'."
+        f"Redacta el primer párrafo sobre '{concepto1}', comenzando con un preámbulo dentro del mismo párrafo, seguido de su definición precisa. "
+        f"No uses la palabra 'variable'. Usa prosa académica, sin frases repetitivas ni de cierre."
     ))
 
     # CONCEPTO 1 – PÁRRAFO 2
     doc.add_paragraph(gpt(
-        f"Redacta un segundo párrafo sobre '{concepto1}', detallando sus características, dimensiones o aplicaciones. "
-        f"No repitas la frase inicial del párrafo anterior. Usa conectores suaves, sin cierre."
+        f"Redacta el segundo párrafo sobre '{concepto1}' detallando sus características, componentes o dimensiones. "
+        f"No repetir la misma frase inicial del párrafo anterior. Evita conclusiones."
     ))
 
     # CONCEPTO 1 – PÁRRAFO 3
     doc.add_paragraph(gpt(
-        f"Redacta un tercer párrafo sobre '{concepto1}', explicando su relevancia práctica, teórica o social. "
-        f"No empieces con 'la importancia de...', ni con la palabra 'concepto'."
+        f"Redacta el tercer párrafo sobre '{concepto1}' explicando su relevancia práctica, académica o profesional. "
+        f"Evita conectar con frases tipo 'en resumen' o 'por lo tanto'."
     ))
 
-    # CONCEPTO 2 – PÁRRAFO 1 (CON CONECTOR)
+    # CONCEPTO 2 – PÁRRAFO 1 (con conector desde anterior)
     doc.add_paragraph(gpt(
-        f"En relación con lo anterior, redacta el primer párrafo del concepto '{concepto2}'. "
-        f"Comienza con una frase conectiva desde el anterior, y define académicamente el concepto sin usar comillas ni metatexto."
+        f"En conexión con el concepto anterior, redacta el primer párrafo sobre '{concepto2}', incluyendo su definición completa, sin usar frases de conclusión ni etiquetas metatextuales."
     ))
 
     # CONCEPTO 2 – PÁRRAFO 2
     doc.add_paragraph(gpt(
-        f"Redacta el segundo párrafo sobre '{concepto2}', explicando dimensiones o aspectos relevantes sin repetir la misma frase inicial. "
-        f"Evita conectores de cierre."
+        f"Redacta el segundo párrafo sobre '{concepto2}' explicando sus dimensiones, características o manifestaciones. "
+        f"No repetir la estructura del párrafo anterior."
     ))
 
     # CONCEPTO 2 – PÁRRAFO 3
     doc.add_paragraph(gpt(
-        f"Redacta el tercer párrafo sobre '{concepto2}' destacando su implicancia contextual o funcional. "
-        f"No usar frases de conclusión ni reiteraciones de la estructura anterior."
+        f"Redacta el tercer párrafo sobre '{concepto2}' destacando su implicancia práctica o contextual, vinculada al tema central: {titulo}. "
+        f"No uses conectores de cierre."
     ))
 
-    # GUARDAR DOCUMENTO
+    # GUARDAR DOC
     filename = f"/tmp/articulo_{datetime.now().strftime('%Y%m%d%H%M%S')}.docx"
     doc.save(filename)
     return filename
