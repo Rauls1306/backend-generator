@@ -42,84 +42,26 @@ def generate_article(tema, nivel):
     titulo = gpt(prompt_titulo)
     doc.add_heading(titulo, level=1)
 
-    # CONTEXTO
+    # CONTEXTO GENERAL
     doc.add_paragraph(gpt(
-        f"Hazme un párrafo como este: La educación superior ha cobrado una relevancia estratégica en los últimos años... Redacta uno igual sobre el tema: {titulo}."
+        f"Redacta un texto así sobre la problemática del artículo titulado '{titulo}', mismo tamaño, mismo 1 párrafo. Modelo: Los polifenoles han demostrado tener un impacto positivo en la reducción de los niveles lipídicos en estudios con Rattus. Se ha encontrado que la administración de diversos extractos de plantas, frutas y otras fuentes naturales en ratas y ratones, que contienen altos niveles de polifenoles contribuyen a disminuir significativamente los niveles de colesterol, triglicéridos y lipoproteínas en ratas y ratones, con reducciones que oscilan entre el 15% y el 30% en comparación con grupos de control. Es así que un producto que también tiene estas características es el Rubus spp. que contiene antioxidantes y compuestos fenólicos que por sus propiedades bioactivas también pueden contribuir a la mejora del perfil lipídico, lo que revela un potencial efecto hipolipemiante. Su potencial la convierte en un candidato interesante para futuros estudios en el ámbito de la nutrición y la salud. Además, su fácil acceso y bajo costo pueden facilitar su incorporación en la dieta de diversas poblaciones. Por lo tanto, es esencial seguir investigando los efectos de la moral en la salud cardiovascular y su uso en estrategias de prevención. Por lo que, la mora Rubus spp. representa una opción viable y beneficiosa en el manejo de la hiperlipidemia en ratas."
     ))
 
-    # MUNDIAL
+    # MUNDIAL / LATAM / PERÚ
     doc.add_paragraph(gpt(
-        f"A nivel mundial, redacta un párrafo académico con tres datos cuantitativos (uno porcentual, uno absoluto y uno comparativo) más un dato cualitativo, todos relacionados con el tema: {titulo}. "
-        f"No menciones instituciones ni utilices frases como 'según estudios'."
+        f"Redacta un texto de 3 párrafos, c/u de 100 palabras, todo estilo scopus q1, sobre la problemática del artículo titulado '{titulo}'. Cada párrafo es por un nivel: el primer párrafo nivel global o mundial, segundo nivel LATAM, tercero nivel nacional del país según el caso. Cada párrafo debe tener 3 datos cuantitativos (solo 2, no más), uno porcentual y uno de datos absolutos, variar. No incluyas citas ni menciones a instituciones ni ambigüedades como 'cerca de' o 'casi'. No uses conectores de cierre. Cada párrafo debe iniciar mencionando el nivel (ejemplo: A nivel global, En Latinoamérica, En el contexto peruano). Además, cada párrafo debe tener 2 datos cualitativos."
     ))
 
-    # LATAM
+    # PROBLEMA / CAUSAS / CONSECUENCIAS
     doc.add_paragraph(gpt(
-        f"En América Latina, redacta otro párrafo con tres datos cuantitativos combinados más una afirmación cualitativa. "
-        f"Evita menciones institucionales y mantén el tema centrado en: {titulo}."
-    ))
-
-    # PERÚ
-    doc.add_paragraph(gpt(
-        f"A nivel nacional en Perú, redacta un párrafo con tres datos (porcentual, absoluto, comparativo) y una afirmación cualitativa sobre el tema: {titulo}. "
-        f"Prohibido usar nombres de organizaciones o estudios."
-    ))
-
-    # PROBLEMA
-    doc.add_paragraph(gpt(
-        f"Redacta un único párrafo de máximo 100 palabras sobre el problema, causas y consecuencias del siguiente tema: {titulo}. "
-        f"Sin conectores de cierre, sin frases metatextuales, solo redacción académica fluida."
+        f"Redáctame un párrafo como este sobre problema, causas y consecuencias sobre la problemática del artículo titulado '{titulo}', en 90 palabras, redactado como para scopus q1, sin datos cuantitativos, sin citas, sin tanta puntuación o separación en las oraciones, que sea un párrafo fluido. Modelo: En ese sentido, se parte de la premisa que la administración de mora Rubus spp. en Rattus resulta en una reducción significativa de los niveles de lípidos en sangre (tratamiento de la hiperlipidemia). Se espera que los compuestos bioactivos presentes en Rubus spp., como polifenoles y antocianinas, contribuyan a mejorar el perfil lipídico y a mitigar los efectos adversos asociados con este trastorno metabólico. Por lo tanto, los experimentos en vivo constituyen una oportunidad para validar la eficacia de Rubus spp. como un enfoque natural en la prevención y manejo de la hiperlipidemia."
     ))
 
     # JUSTIFICACIÓN
     doc.add_paragraph(gpt(
-        f"Se justifica sí o sí la realización de este estudio debido a la importancia del tema: {titulo}. "
-        f"Redacta un solo párrafo de unas 100 palabras en estilo Scopus, sin frases conclusivas, ni subtítulos."
-    ))
-
-    # MARCO TEÓRICO
-    doc.add_heading("Marco teórico", level=2)
-
-    doc.add_paragraph(gpt(
-        f"Redacta un párrafo de aproximadamente 200 palabras sobre una teoría relacionada con el título: {titulo}. "
-        f"Debe incluir una oración de preámbulo fluido, el nombre de la teoría, su autor o creador, el contexto histórico y una explicación completa. "
-        f"No uses frases genéricas ni estructuras metatextuales."
-    ))
-
-    doc.add_paragraph(gpt(
-        f"Redacta otro párrafo de 200 palabras sobre una segunda teoría relacionada con el mismo tema: {titulo}. "
-        f"Inicia con un conector lógico desde el párrafo anterior. Incluye nombre de la teoría, autor y explicación. No contradigas la primera teoría."
-    ))
-
-    # EXTRAER CONCEPTOS
-    conceptos = extract_concepts(titulo)
-    concepto1 = conceptos[0] if len(conceptos) > 0 else "concepto técnico"
-    concepto2 = conceptos[1] if len(conceptos) > 1 else "concepto contextual"
-
-    # CONCEPTO 1 – PÁRRAFO 1
-    doc.add_paragraph(gpt(
-        f"Redacta el primer párrafo sobre '{concepto1}', comenzando con un preámbulo dentro del mismo párrafo, seguido de su definición precisa. "
-        f"No uses la palabra 'variable'. Usa prosa académica, sin frases repetitivas ni de cierre."
-    ))
-
-    # CONCEPTO 1 – PÁRRAFO 2
-    doc.add_paragraph(gpt(
-        f"Redacta el segundo párrafo sobre '{concepto1}', detallando sus características, componentes o dimensiones. "
-        f"No repetir la misma frase inicial del párrafo anterior. Evita conclusiones."
-    ))
-
-    # CONCEPTO 1 – PÁRRAFO 3
-    doc.add_paragraph(gpt(
-        f"Redacta el tercer párrafo sobre '{concepto1}', explicando su relevancia práctica, académica o profesional. "
-        f"Evita conectar con frases tipo 'en resumen' o 'por lo tanto'. No repitas el mismo inicio que en los párrafos anteriores."
-    ))
-
-    # CONCEPTO 2 – TRES PÁRRAFOS CON PROMPT EXACTO
-    doc.add_paragraph(gpt(
-        f"Redacta 3 párrafos sobre el concepto '{concepto2}' c/u de 100 palabras, que al inicio c/u tenga un conector de adición y que el 2 y 3er párrafo no mencionen el nombre del concepto '{concepto2}' en la primera oración, a partir de la 2da sí se puede. Que entre los 3 párrafos se hable de definición, características, tipos, etc."
+        f"Redacta un párrafo de justificación, por relevancia, importancia, etc. (no lo hagas por niveles tipo tesis teórica, práctica o metodológica), de 100 palabras, estilo scopus q1, que empiece con la primera oración con preámbulo que contenga 'se justifica sí o sí', para el artículo titulado '{titulo}'."
     ))
 
     filename = f"/tmp/articulo_{datetime.now().strftime('%Y%m%d%H%M%S')}.docx"
     doc.save(filename)
     return filename
-
