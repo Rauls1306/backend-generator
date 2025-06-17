@@ -11,7 +11,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Usa * para pruebas, luego puedes restringir
+    allow_origins=["https://frontend-generador-one.vercel.app"],  # 🔧 CORS arreglado
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
