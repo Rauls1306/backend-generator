@@ -63,9 +63,8 @@ def generate_article(tema, nivel, pais):
     ))
 
     # JUSTIFICACIÓN
-# JUSTIFICACIÓN
 doc.add_paragraph(gpt(
-    f"Redacta un párrafo de justificación, por relevancia, importancia, etc. (no lo hagas por niveles tipo tesis teórica, práctica o metodológica), de 100 palabras, estilo scopus q1, que empiece con la primera oración con preámbulo que contenga 'se justifica', para el artículo titulado '{titulo}'."
+    f"""Redacta un párrafo de justificación, por relevancia, importancia, etc. (no lo hagas por niveles tipo tesis teórica, práctica o metodológica), de 100 palabras, estilo scopus q1, que empiece con la primera oración con preámbulo que contenga 'se justifica', para el artículo titulado '{titulo}'. Sin mencionar el título del artículo en esta justificación."""
 ))
 
 
