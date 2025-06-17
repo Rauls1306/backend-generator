@@ -25,7 +25,7 @@ def extract_concepts(titulo):
     resultado = gpt(prompt)
     return [v.strip() for v in resultado.split("\n") if v.strip()]
 
-def generate_article(tema, nivel):
+def generate_article(tema, nivel, pais):
     doc = Document()
     doc.add_heading("Artículo generado automáticamente", 0)
 
@@ -47,9 +47,14 @@ def generate_article(tema, nivel):
         f"Redacta un texto así sobre la problemática del artículo titulado '{titulo}', mismo tamaño, mismo 1 párrafo. Modelo: Los polifenoles han demostrado tener un impacto positivo en la reducción de los niveles lipídicos en estudios con Rattus. Se ha encontrado que la administración de diversos extractos de plantas, frutas y otras fuentes naturales en ratas y ratones, que contienen altos niveles de polifenoles contribuyen a disminuir significativamente los niveles de colesterol, triglicéridos y lipoproteínas en ratas y ratones, con reducciones que oscilan entre el 15% y el 30% en comparación con grupos de control. Es así que un producto que también tiene estas características es el Rubus spp. que contiene antioxidantes y compuestos fenólicos que por sus propiedades bioactivas también pueden contribuir a la mejora del perfil lipídico, lo que revela un potencial efecto hipolipemiante. Su potencial la convierte en un candidato interesante para futuros estudios en el ámbito de la nutrición y la salud. Además, su fácil acceso y bajo costo pueden facilitar su incorporación en la dieta de diversas poblaciones. Por lo tanto, es esencial seguir investigando los efectos de la moral en la salud cardiovascular y su uso en estrategias de prevención. Por lo que, la mora Rubus spp. representa una opción viable y beneficiosa en el manejo de la hiperlipidemia en ratas."
     ))
 
-    # MUNDIAL / LATAM / PERÚ
+    # MUNDIAL / LATAM / PAÍS SELECCIONADO
     doc.add_paragraph(gpt(
-        f"Redacta un texto de 3 párrafos, c/u de 100 palabras, todo estilo scopus q1, sobre la problemática del artículo titulado '{titulo}'. Cada párrafo es por un nivel: el primer párrafo nivel global o mundial, segundo nivel LATAM, tercero nivel nacional del país según el caso. Cada párrafo debe tener 3 datos cuantitativos (solo 2, no más), uno porcentual y uno de datos absolutos, variar. No incluyas citas ni menciones a instituciones ni ambigüedades como 'cerca de' o 'casi'. No uses conectores de cierre. Cada párrafo debe iniciar mencionando el nivel (ejemplo: A nivel global, En Latinoamérica, En el contexto peruano). Además, cada párrafo debe tener 2 datos cualitativos."
+        f"Redacta un texto de 3 párrafos, c/u de 100 palabras, todo estilo scopus q1, sobre la problemática del artículo titulado '{titulo}'. "
+        f"Cada párrafo es por un nivel: el primer párrafo nivel global o mundial, segundo nivel LATAM, tercero nivel nacional del país {pais}. "
+        f"Cada párrafo debe tener 3 datos cuantitativos (solo 2, no más), uno porcentual y uno de datos absolutos, variar. "
+        f"No incluyas citas ni menciones a instituciones ni ambigüedades como 'cerca de' o 'casi'. No uses conectores de cierre. "
+        f"Cada párrafo debe iniciar mencionando el nivel (ejemplo: A nivel global, En Latinoamérica, En el contexto de {pais}). "
+        f"Además, cada párrafo debe tener 2 datos cualitativos."
     ))
 
     # PROBLEMA / CAUSAS / CONSECUENCIAS
@@ -59,7 +64,7 @@ def generate_article(tema, nivel):
 
     # JUSTIFICACIÓN
     doc.add_paragraph(gpt(
-        f"Redacta un párrafo de justificación, por relevancia, importancia, etc. (no lo hagas por niveles tipo tesis teórica, práctica o metodológica), de 100 palabras, estilo scopus q1, que empiece con la primera oración con preámbulo que contenga 'se justifica sí o sí', para el artículo titulado '{titulo}'."
+        f"Redacta un párrafo de justificación, por relevancia, importancia, etc. (no lo hagas por niveles tipo tesis teórica, práctica o metodológica), de 100 palabras, estilo scopus q1, que empiece con la primera oración con preámbulo que contenga 'se justifica', para el artículo titulado '{titulo}'."
     ))
 
     filename = f"/tmp/articulo_{datetime.now().strftime('%Y%m%d%H%M%S')}.docx"
