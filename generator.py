@@ -67,6 +67,19 @@ def generate_article(tema, nivel, pais):
         f"Redacta un párrafo de justificación, por relevancia, importancia, etc. (no lo hagas por niveles tipo tesis teórica, práctica o metodológica), de 100 palabras, estilo scopus q1, que empiece con la primera oración con preámbulo que contenga \"se justifica\", para el artículo titulado '{titulo}'. Sin mencionar el título del artículo en esta justificación."
     ))
 
+    # MARCO TEÓRICO
+    doc.add_heading("Marco teórico", level=2)
+
+    # TEORÍA 1
+    doc.add_paragraph(gpt(
+        f"A partir de esta investigación titulada '{titulo}', busca 2 teorías en las que se podría basar, y de ellas, de cada una, redacta un párrafo de 150 palabras que tenga en la primera oración una especie de preámbulo, y a partir de la segunda ya menciones el nombre de la teoría, el padre (principal propulsor) y de qué trata. Importante: no menciones el título de la investigación en ningún párrafo ni uses conectores de cierre. Sin subtítulos, todo prosa."
+    ))
+
+    # VARIABLES (2 x 2 párrafos)
+    doc.add_paragraph(gpt(
+        f"A partir de esta investigación titulada '{titulo}', extrae sus dos variables principales (generales, sin especificación). Luego, de cada una redacta un texto de dos párrafos (en total 4), cada párrafo de 100 palabras. Cada párrafo debe comenzar con una especie de preámbulo en la primera oración, y a partir de la segunda desarrollar definición, características, tipos, conceptos, etc. Ambos textos deben ir en prosa continua, sin subtítulos."
+    ))
+
     filename = f"/tmp/articulo_{datetime.now().strftime('%Y%m%d%H%M%S')}.docx"
     doc.save(filename)
     return filename
