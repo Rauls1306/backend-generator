@@ -54,7 +54,7 @@ def generate_article(tema, nivel, pais):
         f"Cada párrafo debe tener 3 datos cuantitativos (solo uno porcentual, los otros 2 numericos, IMPORTANTE). "
         f"No incluyas citas ni menciones a instituciones ni ambigüedades como 'cerca de' o 'casi'. No uses conectores de cierre. "
         f"Cada párrafo debe iniciar mencionando el nivel (ejemplo: A nivel global, En Latinoamérica, En el contexto de {pais}). "
-        f"Además, cada párrafo debe tener 2 datos cualitativos."
+        f"Además, cada párrafo debe tener 2 datos cualitativos. TODA SOLO INFORMACION DE LOS ULTIMOS 5 AÑOS"
     ))
 
     # PROBLEMA / CAUSAS / CONSECUENCIAS
