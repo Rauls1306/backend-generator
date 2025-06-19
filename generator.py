@@ -54,7 +54,7 @@ def generate_article(tema, nivel, pais):
         f"Cada párrafo debe tener 3 datos cuantitativos (solo uno porcentual, los otros 2 numericos, IMPORTANTEeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee). "
         f"No incluyas citas ni menciones a instituciones ni ambigüedades como 'cerca de' o 'casi'. No uses conectores de cierre. "
         f"Cada párrafo debe iniciar mencionando el nivel (ejemplo: A nivel global, En Latinoamérica, En el contexto de {pais}). "
-        f"Además, cada párrafo debe tener 2 datos cualitativos. TODA SOLO INFORMACION DE LOS ULTIMOS 5 AÑOS"
+        f"Además, cada párrafo debe tener 2 datos cualitativos. TODA SOLO INFORMACION DE LOS ULTIMOS 5 AÑOS. importante, no uses la palabra "CUALITATIVA" ni similares"
     ))
 
     # PROBLEMA / CAUSAS / CONSECUENCIAS
@@ -77,7 +77,7 @@ def generate_article(tema, nivel, pais):
 
     # VARIABLES (2 x 2 párrafos)
     doc.add_paragraph(gpt(
-        f"A partir de esta investigación titulada '{titulo}', extrae sus dos variables principales (generales, sin especificación). Luego, de cada una redacta un texto de dos párrafos (IMPORTANTE en total 4 PARRAFOS), cada párrafo de 100 palabras. IMPORTANTE: Cada párrafo debe comenzar con un CONECTOR DE ADICION ESTO ES IMPORTANTISIMOOOOO, y a partir de la segunda desarrollar definición, características, tipos, conceptos, etc. Ambos textos deben ir en prosa continua, sin subtítulos, IMPORTANTE: NO EXPLIQUES QUE HAS ESCOGIDO LAS VARIABLES, NO UTILICES LA PALABRA VARIABLE NI SIMILARES, NO MENCIONAR EL TITULO DE LA INVESTIGACION, NO HABLES EN PRIMERA PERSONA (EJ: HABLAMOS) IMPORTANTEEEEEEEEEEEEEEEEEEEEEEE LEE TODAS LAS INIDCACIONES."
+        f"A partir de esta investigación titulada '{titulo}', extrae sus dos variables principales (generales, sin especificación). Luego, de cada una redacta un texto de dos párrafos (IMPORTANTE en total 4 PARRAFOS), cada párrafo de 100 palabras. IMPORTANTE: Cada párrafo debe comenzar con un CONECTOR DE ADICION (EJEMPLOS: En ese mismo sentido, de manera concordante, en consonancia con lo anterior, siguiendo esa orientación)ESTO ES IMPORTANTISIMOOOOO, y a partir de la segunda desarrollar definición, características, tipos, conceptos, etc. Ambos textos deben ir en prosa continua, sin subtítulos, IMPORTANTE: NO EXPLIQUES QUE HAS ESCOGIDO LAS VARIABLES, NO UTILICES LA PALABRA VARIABLE NI SIMILARES, NO MENCIONAR EL TITULO DE LA INVESTIGACION, NO HABLES EN PRIMERA PERSONA (EJ: HABLAMOS) IMPORTANTEEEEEEEEEEEEEEEEEEEEEEE. NO USES CONECTORES DE CIERRE. LEE TODAS LAS INIDCACIONES."
     ))
 
     filename = f"/tmp/articulo_{datetime.now().strftime('%Y%m%d%H%M%S')}.docx"
