@@ -77,7 +77,7 @@ def generate_article(tema, nivel, pais):
 
     # VARIABLES (2 x 2 párrafos)
     doc.add_paragraph(gpt(
-        f"A partir de esta investigación titulada '{titulo}', extrae sus dos variables principales (generales, sin especificación). Luego, de cada una redacta un texto de dos párrafos (en total 4), cada párrafo de 100 palabras. Cada párrafo debe comenzar con una especie de preámbulo en la primera oración, y a partir de la segunda desarrollar definición, características, tipos, conceptos, etc. Ambos textos deben ir en prosa continua, sin subtítulos."
+        f"A partir de esta investigación titulada '{titulo}', extrae sus dos variables principales (generales, sin especificación). Luego, de cada una redacta un texto de dos párrafos (IMPORTANTE en total 4 PARRAFOS), cada párrafo de 100 palabras. IMPORTANTE: Cada párrafo debe comenzar con una especie de preámbulo en la primera oración, y a partir de la segunda desarrollar definición, características, tipos, conceptos, etc. Ambos textos deben ir en prosa continua, sin subtítulos, IMPORTANTE: NO EXPLIQUES QUE HAS ESCOGIDO LAS VARIABLES, NO UTILICES LA PALABRA VARIABLE NI SIMILARES."
     ))
 
     filename = f"/tmp/articulo_{datetime.now().strftime('%Y%m%d%H%M%S')}.docx"
