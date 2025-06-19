@@ -51,7 +51,7 @@ def generate_article(tema, nivel, pais):
     doc.add_paragraph(gpt(
         f"Redacta un texto de 3 párrafos, c/u de 100 palabras, todo estilo scopus q1, sobre la problemática del artículo titulado '{titulo}'. "
         f"Cada párrafo es por un nivel: el primer párrafo nivel global o mundial, segundo nivel LATAM, tercero nivel nacional del país {pais}. "
-        f"Cada párrafo debe tener 3 datos cuantitativos (solo uno porcentual, los otros 2 numericos, IMPORTANTE). "
+        f"Cada párrafo debe tener 3 datos cuantitativos (solo uno porcentual, los otros 2 numericos, IMPORTANTEeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee). "
         f"No incluyas citas ni menciones a instituciones ni ambigüedades como 'cerca de' o 'casi'. No uses conectores de cierre. "
         f"Cada párrafo debe iniciar mencionando el nivel (ejemplo: A nivel global, En Latinoamérica, En el contexto de {pais}). "
         f"Además, cada párrafo debe tener 2 datos cualitativos. TODA SOLO INFORMACION DE LOS ULTIMOS 5 AÑOS"
@@ -77,7 +77,7 @@ def generate_article(tema, nivel, pais):
 
     # VARIABLES (2 x 2 párrafos)
     doc.add_paragraph(gpt(
-        f"A partir de esta investigación titulada '{titulo}', extrae sus dos variables principales (generales, sin especificación). Luego, de cada una redacta un texto de dos párrafos (IMPORTANTE en total 4 PARRAFOS), cada párrafo de 100 palabras. IMPORTANTE: Cada párrafo debe comenzar con una especie de preámbulo en la primera oración, NO EMPIECES DANDO LA INFO EN LA PRIMERA ORACION, y a partir de la segunda desarrollar definición, características, tipos, conceptos, etc. Ambos textos deben ir en prosa continua, sin subtítulos, IMPORTANTE: NO EXPLIQUES QUE HAS ESCOGIDO LAS VARIABLES, NO UTILICES LA PALABRA VARIABLE NI SIMILARES, NO MENCIONAR EL TITULO DE LA INVESTIGACION, NO HABLES EN PRIMERA PERSONA (EJ: HABLAMOS) LEE TODAS LAS INIDCACIONES."
+        f"A partir de esta investigación titulada '{titulo}', extrae sus dos variables principales (generales, sin especificación). Luego, de cada una redacta un texto de dos párrafos (IMPORTANTE en total 4 PARRAFOS), cada párrafo de 100 palabras. IMPORTANTE: Cada párrafo debe comenzar con una especie de preámbulo en la primera oración, NO EMPIECES DANDO LA INFO EN LA PRIMERA ORACION, y a partir de la segunda desarrollar definición, características, tipos, conceptos, etc. Ambos textos deben ir en prosa continua, sin subtítulos, IMPORTANTE: NO EXPLIQUES QUE HAS ESCOGIDO LAS VARIABLES, NO UTILICES LA PALABRA VARIABLE NI SIMILARES, NO MENCIONAR EL TITULO DE LA INVESTIGACION, NO HABLES EN PRIMERA PERSONA (EJ: HABLAMOS) IMPORTANTEEEEEEEEEEEEEEEEEEEEEEE LEE TODAS LAS INIDCACIONES."
     ))
 
     filename = f"/tmp/articulo_{datetime.now().strftime('%Y%m%d%H%M%S')}.docx"
