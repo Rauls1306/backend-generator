@@ -48,12 +48,14 @@ def generate_article(tema, nivel, pais):
     ))
 
     # MUNDIAL / LATAM / PAÍS SELECCIONADO
-    for nivel_region, etiqueta in [("global o mundial", "A nivel global"), ("LATAM", "En Latinoamérica"), (f"nacional del país {pais}", f"En el contexto de {pais}")]:
-        doc.add_paragraph(gpt(
-            f"Redacta un párrafo de 100 palabras, estilo scopus q1, sobre la problemática del artículo titulado '{titulo}' a nivel {nivel_region}. "
-            f"Debe tener solo un dato porcentual, dos datos absolutos (IMPORTANTE). No incluyas citas ni menciones institucionales ni ambigüedades. No uses conectores de cierre. "
-            f"Empieza con: '{etiqueta}, ...'. No uses la palabra cualitativa. Información reciente de los últimos 5 años."
-        ))
+    doc.add_paragraph(gpt(
+        f"Redacta un texto de 3 párrafos, c/u de 100 palabras, todo estilo scopus q1, sobre la problemática del artículo titulado '{titulo}'. "
+        f"Cada párrafo es por un nivel: el primer párrafo nivel global o mundial, segundo nivel LATAM, tercero nivel nacional del país {pais}. "
+        f"Cada párrafo debe tener 3 datos cuantitativos (solo uno porcentual, los otros 2 numericos, IMPORTANTEeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee). "
+        f"No incluyas citas ni menciones a instituciones ni ambigüedades como 'cerca de' o 'casi'. No uses conectores de cierre. "
+        f"Cada párrafo debe iniciar mencionando el nivel (ejemplo: A nivel global, En Latinoamérica, En el contexto de {pais}). "
+        f"Además, cada párrafo debe tener 2 datos cualitativos. TODA SOLO INFORMACION DE LOS ULTIMOS 5 AÑOS. importante, no uses la palabra \\\"CUALITATIVA\\\" ni similares"
+    ))
 
     # PROBLEMA / CAUSAS / CONSECUENCIAS
     doc.add_paragraph(gpt(
@@ -70,23 +72,13 @@ def generate_article(tema, nivel, pais):
 
     # TEORÍA 1
     doc.add_paragraph(gpt(
-        f"A partir de esta investigación titulada '{titulo}', busca 1 teoría en la que se podría basar y redacta un párrafo de 150 palabras que tenga en la primera oración una especie de preámbulo, y a partir de la segunda ya menciones el nombre de la teoría, el padre (principal propulsor) y de qué trata. Importante: no menciones el título de la investigación en ningún párrafo ni uses conectores de cierre. Sin subtítulos, todo prosa."
-    ))
-
-    # TEORÍA 2
-    doc.add_paragraph(gpt(
-        f"Redacta otro párrafo de 150 palabras con otra teoría aplicable a la investigación titulada '{titulo}'. Inicia con un conector desde la teoría anterior. Incluye nombre de la teoría, su creador y contenido completo. No uses conectores de cierre ni menciones el título."
+        f"A partir de esta investigación titulada '{titulo}', busca 2 teorías en las que se podría basar, y de ellas, de cada una, redacta un párrafo de 150 palabras que tenga en la primera oración una especie de preámbulo, y a partir de la segunda ya menciones el nombre de la teoría, el padre (principal propulsor) y de qué trata. Importante: no menciones el título de la investigación en ningún párrafo ni uses conectores de cierre. Sin subtítulos, todo prosa."
     ))
 
     # VARIABLES (2 x 2 párrafos)
-    conceptos = extract_concepts(titulo)
-    concepto1 = conceptos[0] if len(conceptos) > 0 else "concepto técnico"
-    concepto2 = conceptos[1] if len(conceptos) > 1 else "concepto contextual"
-
-    for concepto in [concepto1, concepto2]:
-        doc.add_paragraph(gpt(
-            f"Redacta dos párrafos de 100 palabras cada uno sobre el concepto '{concepto}'. Cada párrafo debe iniciar con un conector de adición (ej: de manera concordante, en consonancia con lo anterior, siguiendo esa orientación). En el primer párrafo habla de definición y características; en el segundo de tipos, funciones, clasificación u otras dimensiones. No uses subtítulos, no digas que fue extraída de ningún lado, no uses conectores de cierre, no repitas estructura, no uses la palabra variable ni similares, ni menciones el título de la investigación."
-        ))
+    doc.add_paragraph(gpt(
+        f"A partir de esta investigación titulada '{titulo}', extrae sus dos variables principales (generales, sin especificación). Luego, de cada una redacta un texto de dos párrafos (IMPORTANTE en total 4 PARRAFOS), cada párrafo de 100 palabras. IMPORTANTE: Cada párrafo debe comenzar con un CONECTOR DE ADICION (EJEMPLOS: de manera concordante, en consonancia con lo anterior, siguiendo esa orientación) ESTO ES IMPORTANTISIMOOOOO, y a partir de la segunda desarrollar definición, características, tipos, conceptos, etc. Ambos textos deben ir en prosa continua, sin subtítulos, IMPORTANTE: NO EXPLIQUES QUE HAS ESCOGIDO LAS VARIABLES, NO UTILICES LA PALABRA VARIABLE NI SIMILARES, NO MENCIONAR EL TITULO DE LA INVESTIGACION, NO HABLES EN PRIMERA PERSONA (EJ: HABLAMOS) IMPORTANTEEEEEEEEEEEEEEEEEEEEEEE. NO USES CONECTORES DE CIERRE. LEE TODAS LAS INIDCACIONES."
+    ))
 
     filename = f"/tmp/articulo_{datetime.now().strftime('%Y%m%d%H%M%S')}.docx"
     doc.save(filename)
