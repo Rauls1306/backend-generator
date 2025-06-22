@@ -26,6 +26,7 @@ def extract_concepts(titulo):
     resultado = gpt(prompt)
     return [v.strip() for v in resultado.split("\n") if v.strip()]
 
+# Cambio mínimo para forzar redeploy en Railway
 def generate_article(tema, nivel, pais):
     doc = Document()
     doc.add_heading("Artículo generado automáticamente", 0)
