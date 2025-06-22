@@ -91,7 +91,47 @@ teoria1, teoria2 = teorias.split("\n\n")[:2]
 conceptos_divididos = conceptos.split("\n\n")[:5]
 concepto1_p1, concepto1_p2 = conceptos_divididos[0], conceptos_divididos[1]
 concepto2_p1, concepto2_p2, concepto2_p3 = conceptos_divididos[2], conceptos_divididos[3], conceptos_divididos[4]
+generated_text = {
+    "contexto": contexto,
+    "mundial": mundial,
+    "latam": latam,
+    "peru": peru,
+    "problema": problema,
+    "justificacion": justificacion,
+    "teoria1": teoria1,
+    "teoria2": teoria2,
+    "concepto1_p1": concepto1_p1,
+    "concepto1_p2": concepto1_p2,
+    "concepto2_p1": concepto2_p1,
+    "concepto2_p2": concepto2_p2,
+    "concepto2_p3": concepto2_p3
+}
+from citation_generator import CitationGenerator
 
-    filename = f"/tmp/articulo_{datetime.now().strftime('%Y%m%d%H%M%S')}.docx"
-    doc.save(filename)
-    return filename
+cg = CitationGenerator(title=titulo, generated_text=generated_text)
+cg.generate_all_references()
+cg.generate_all_citations()
+text_with_citations = cg.insert_all_citations()
+reference_list = cg.get_references_list()
+
+final_article = ""
+for key in [
+    "contexto", "mundial", "latam", "peru", "problema", "justificacion",
+    "teoria1", "teoria2",
+    "concepto1_p1", "concepto1_p2",
+    "concepto2_p1", "concepto2_p2", "concepto2_p3"
+]:
+    if key in text_with_citations:
+        final_article += text_with_citations[key] + "\n\n"
+
+final_article += "Referencias\n"
+for ref in reference_list:
+    final_article += ref + "\n"
+    
+from docx_writer import save_article_to_docx
+from datetime import datetime
+
+filename = f"/tmp/articulo_{datetime.now().strftime('%Y%m%d%H%M%S')}.docx"
+save_article_to_docx(final_article, filename)
+return filename
+
