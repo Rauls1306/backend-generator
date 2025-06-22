@@ -5,7 +5,7 @@ from generator import generate_article
 
 app = FastAPI()
 
-# Configuración CORS para permitir llamadas desde el frontend en Vercel
+# Configurar CORS con soporte completo
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["https://frontend-generator-one.vercel.app"],
@@ -14,32 +14,33 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Manejo explícito de preflight OPTIONS para la ruta /generar
-@app.options("/generar")
-async def options_handler():
-    return JSONResponse(content={"ok": True}, status_code=200)
-
-# Ruta raíz para verificación
+# Ruta raíz
 @app.get("/")
 def root():
     return {"message": "API funcionando"}
 
-# Endpoint principal para generar el artículo
+# Ruta manual para OPTIONS (preflight) que soluciona el 400 Bad Request
+@app.options("/generar")
+async def preflight():
+    return JSONResponse(content={"ok": True}, status_code=200)
+
+# Ruta POST para generar artículo
 @app.post("/generar")
 async def generar_articulo(request: Request):
-    data = await request.json()
-    print("Datos recibidos:", data)
-
-    tema = data.get("tema")
-    nivel = data.get("nivel", "Scopus")
-    pais = data.get("pais", "Perú")
-
     try:
+        data = await request.json()
+        print("Datos recibidos:", data)
+
+        tema = data.get("tema")
+        nivel = data.get("nivel", "Scopus")
+        pais = data.get("pais", "Perú")
+
         ruta_archivo = generate_article(tema, nivel, pais)
         return FileResponse(ruta_archivo, filename="articulo_generado.docx")
+
     except Exception as e:
         print(f"Error al generar el artículo: {str(e)}")
         return JSONResponse(
-            status_code=500,
-            content={"error": f"No se pudo generar el artículo: {str(e)}"}
+            content={"error": f"No se pudo generar el artículo: {str(e)}"},
+            status_code=500
         )
