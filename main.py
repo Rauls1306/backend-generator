@@ -12,7 +12,7 @@ app = FastAPI()
 # CORS habilitado correctamente (recomendado: usar dominio explícito en producción)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://frontend-generator-one.vercel.app"],
+    allow_origins=["https://frontend-generator-one.vercel.app"],  # Dominio frontend real
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
