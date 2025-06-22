@@ -90,3 +90,41 @@ def generate_article(tema, nivel, pais):
     filename = f"/tmp/articulo_{datetime.now().strftime('%Y%m%d%H%M%S')}.docx"
     doc.save(filename)
     return filename
+
+from citation_generator import CitationGenerator
+
+# Suponiendo que ya tienes estas dos variables generadas antes:
+# - title: el título del artículo
+# - generated_text: diccionario con el texto base sin citas, por ejemplo:
+#   {
+#       "contexto": "...",
+#       "mundial": "...",
+#       "latam": "...",
+#       "peru": "...",
+#       "problema": "...",
+#       "justificacion": "...",
+#       "teoria1": "...",
+#       "teoria2": "...",
+#       "concepto1_p1": "...",
+#       "concepto1_p2": "...",
+#       "concepto2_p1": "...",
+#       "concepto2_p2": "...",
+#       "concepto2_p3": "..."
+#   }
+
+# Paso 1: Crear el generador de citas
+cg = CitationGenerator(title=title, generated_text=generated_text)
+
+# Paso 2: Buscar fuentes y generar citas
+cg.generate_all_references()
+cg.generate_all_citations()
+
+# Paso 3: Insertar las citas en el texto original
+text_with_citations = cg.insert_all_citations()
+
+# Paso 4: Obtener lista final de referencias APA
+reference_list = cg.get_references_list()
+
+# Ahora puedes devolver esto como respuesta o generar el Word con:
+# - text_with_citations: el cuerpo del artículo con todas las citas integradas
+# - reference_list: la lista final para la sección “Referencias”
