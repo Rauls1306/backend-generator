@@ -87,7 +87,12 @@ def generate_article(tema, nivel, pais):
     conceptos = gpt(
         f"A partir de esta investigación titulada '{titulo}', extrae sus dos variables principales (generales, sin especificación). Luego, de cada una redacta un texto de dos párrafos (IMPORTANTE en total 4 PARRAFOS), cada párrafo de 100 palabras. IMPORTANTE: Cada párrafo debe comenzar con un CONECTOR DE ADICION (EJEMPLOS: de manera concordante, en consonancia con lo anterior, siguiendo esa orientación) ESTO ES IMPORTANTISIMOOOOO, y a partir de la segunda desarrollar definición, características, tipos, conceptos, etc. Ambos textos deben ir en prosa continua, sin subtítulos, IMPORTANTE: NO EXPLIQUES QUE HAS ESCOGIDO LAS VARIABLES, NO UTILICES LA PALABRA VARIABLE NI SIMILARES, NO MENCIONAR EL TITULO DE LA INVESTIGACION, NO HABLES EN PRIMERA PERSONA (EJ: HABLAMOS) IMPORTANTEEEEEEEEEEEEEEEEEEEEEEE. NO USES CONECTORES DE CIERRE. LEE TODAS LAS INIDCACIONES."
     )
-    conceptos_divididos = conceptos.split("\n\n")[:5]
+    conceptos_divididos = conceptos.split("\n\n")
+    
+    # Proteger contra respuestas incompletas
+    while len(conceptos_divididos) < 5:
+        conceptos_divididos.append("")
+    
     concepto1_p1, concepto1_p2 = conceptos_divididos[0], conceptos_divididos[1]
     concepto2_p1, concepto2_p2, concepto2_p3 = conceptos_divididos[2], conceptos_divididos[3], conceptos_divididos[4]
 
