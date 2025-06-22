@@ -62,10 +62,10 @@ mundial_latam_peru = gpt(
 mundial, latam, peru = mundial_latam_peru.split("\n")[:3]
 time.sleep(2)
     # PROBLEMA / CAUSAS / CONSECUENCIAS
-    problema = gpt(
-        f"Redáctame un párrafo como este sobre problema, causas y consecuencias sobre la problemática del artículo titulado '{titulo}', en 90 palabras, redactado como para scopus q1, sin datos cuantitativos, sin citas, sin tanta puntuación o separación en las oraciones, que sea un párrafo fluido. no menciones el titulo del articulo textualmente en este parrafo..."
-    )
-    time.sleep(2)
+problema = gpt(
+    f"Redáctame un párrafo como este sobre problema, causas y consecuencias sobre la problemática del artículo titulado '{titulo}', en 90 palabras, redactado como para scopus q1, sin datos cuantitativos, sin citas, sin tanta puntuación o separación en las oraciones, que sea un párrafo fluido. no menciones el titulo del articulo textualmente en este parrafo..."
+)
+time.sleep(2)
 
     # JUSTIFICACIÓN
 justificacion = gpt(
