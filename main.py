@@ -1,11 +1,12 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
+from fastapi.routing import APIRoute
 from generator import generate_article
 
 app = FastAPI()
 
-# Configurar CORS con soporte completo
+# CORS: permitir desde Vercel
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["https://frontend-generator-one.vercel.app"],
@@ -14,17 +15,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Ruta raíz
 @app.get("/")
 def root():
     return {"message": "API funcionando"}
 
-# Ruta manual para OPTIONS (preflight) que soluciona el 400 Bad Request
+# RUTA MANUAL OPCIONAL para OPTIONS si sigue dando 400
 @app.options("/generar")
-async def preflight():
+async def preflight_handler():
     return JSONResponse(content={"ok": True}, status_code=200)
 
-# Ruta POST para generar artículo
 @app.post("/generar")
 async def generar_articulo(request: Request):
     try:
@@ -41,6 +40,6 @@ async def generar_articulo(request: Request):
     except Exception as e:
         print(f"Error al generar el artículo: {str(e)}")
         return JSONResponse(
+            status_code=500,
             content={"error": f"No se pudo generar el artículo: {str(e)}"},
-            status_code=500
         )
