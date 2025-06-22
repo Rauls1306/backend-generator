@@ -63,7 +63,7 @@ mundial, latam, peru = mundial_latam_peru.split("\n")[:3]
 time.sleep(2)
     # PROBLEMA / CAUSAS / CONSECUENCIAS
     problema = gpt(
-        f"Redáctame un párrafo como este sobre problema, causas y consecuencias sobre la problemática del artículo titulado '{{titulo}}', en 90 palabras, redactado como para scopus q1, sin datos cuantitativos, sin citas, sin tanta puntuación o separación en las oraciones, que sea un párrafo fluido. no menciones el titulo del articulo textualmente en este parrafo, Modelo: En ese sentido, se parte de la premisa que la administración de mora Rubus spp. en Rattus resulta en una reducción significativa de los niveles de lípidos en sangre (tratamiento de la hiperlipidemia). Se espera que los compuestos bioactivos presentes en Rubus spp., como polifenoles y antocianinas, contribuyan a mejorar el perfil lipídico y a mitigar los efectos adversos asociados con este trastorno metabólico. Por lo tanto, los experimentos en vivo constituyen una oportunidad para validar la eficacia de Rubus spp. como un enfoque natural en la prevención y manejo de la hiperlipidemia."
+        f"Redáctame un párrafo como este sobre problema, causas y consecuencias sobre la problemática del artículo titulado '{titulo}', en 90 palabras, redactado como para scopus q1, sin datos cuantitativos, sin citas, sin tanta puntuación o separación en las oraciones, que sea un párrafo fluido. no menciones el titulo del articulo textualmente en este parrafo..."
     )
     time.sleep(2)
 
