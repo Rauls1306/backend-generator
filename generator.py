@@ -90,39 +90,3 @@ def generate_article(tema, nivel, pais):
     filename = f"/tmp/articulo_{datetime.now().strftime('%Y%m%d%H%M%S')}.docx"
     doc.save(filename)
     return filename
-
-from citation_generator import CitationGenerator
-
-# Ya tienes estas dos variables antes en tu código:
-# title = ... (el título generado)
-# generated_text = ... (el texto sin citas generado por generator.py)
-
-# 1. Crear el generador de citas
-cg = CitationGenerator(title=title, generated_text=generated_text)
-
-# 2. Generar referencias y citas
-cg.generate_all_references()
-cg.generate_all_citations()
-
-# 3. Insertar las citas en el texto
-text_with_citations = cg.insert_all_citations()
-
-# 4. Obtener lista final de referencias APA
-reference_list = cg.get_references_list()
-
-# 5. Construir el texto final con capítulo de Referencias incluido
-final_article = ""
-
-for key in [
-    "contexto", "mundial", "latam", "peru", "problema", "justificacion",
-    "teoria1", "teoria2",
-    "concepto1_p1", "concepto1_p2",
-    "concepto2_p1", "concepto2_p2", "concepto2_p3"
-]:
-    if key in text_with_citations:
-        final_article += text_with_citations[key] + "\n\n"
-
-# Añadir el capítulo de referencias al final
-final_article += "Referencias\n"
-for ref in reference_list:
-    final_article += ref + "\n"
