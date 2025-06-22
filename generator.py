@@ -74,7 +74,7 @@ justificacion = gpt(
 time.sleep(2)
 
     # MARCO TEÓRICO
-    doc.add_heading("Marco teórico", level=2)
+doc.add_heading("Marco teórico", level=2)
 
     # TEORÍA 1
 teorias = gpt(
