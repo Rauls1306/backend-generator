@@ -28,11 +28,11 @@ def extract_concepts(titulo):
 
 def generate_article(tema, nivel, pais):
     doc = Document()
-    doc.add_heading("Artículo generado automáticamente", 0)
-
-    doc.add_paragraph(f"Tema ingresado: {tema}")
-    doc.add_paragraph(f"Nivel de indexación: {nivel}")
-    doc.add_paragraph("")
+        doc.add_heading("Artículo generado automáticamente", 0)
+    
+        doc.add_paragraph(f"Tema ingresado: {tema}")
+        doc.add_paragraph(f"Nivel de indexación: {nivel}")
+        doc.add_paragraph("")
 
     # TÍTULO
     prompt_titulo = (
@@ -100,8 +100,6 @@ generated_text = {
     "justificacion": justificacion,
     "teoria1": teoria1,
     "teoria2": teoria2,
-    "concepto1_p1": concepto1_p1,
-    "concepto1_p2": concepto1_p2,
     "concepto2_p1": concepto2_p1,
     "concepto2_p2": concepto2_p2,
     "concepto2_p3": concepto2_p3
