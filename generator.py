@@ -81,7 +81,7 @@ teorias = gpt(
     f"A partir de esta investigación titulada '{titulo}', busca 2 teorías en las que se podría basar, y de ellas, de cada una, redacta un párrafo de 150 palabras que tenga en la primera oración una especie de preámbulo, y a partir de la segunda ya menciones el nombre de la teoría, el padre (principal propulsor) y de qué trata. Importante: no menciones el título de la investigación en ningún párrafo ni uses conectores de cierre. Sin subtítulos, todo prosa. NO MENCIONES LIBROS. NO USES AMBIGUEDADES COMO, PODRIA SER, TODO EXACTO, EN VEZ DE PORDRIA SER, PON, ES. NO USES LAS PALABRAS, POR EJEMPLO, CRUCIAL"
 )
 teoria1, teoria2 = teorias.split("\n\n")[:2]
-    time.sleep(2)
+time.sleep(2)
 
     # VARIABLES (2 x 2 párrafos)
  conceptos = gpt(
