@@ -1,12 +1,15 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, JSONResponse
-from fastapi.routing import APIRoute
+from fastapi.responses import FileResponse
 from generator import generate_article
+import os
+
+# Forzar instalación de la versión funcional de OpenAI (puedes quitar si ya funciona bien)
+os.system("pip install openai==0.28 --upgrade")
 
 app = FastAPI()
 
-# CORS: permitir desde Vercel
+# CORS habilitado correctamente (origen real del frontend)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["https://frontend-generator-one.vercel.app"],
@@ -18,11 +21,6 @@ app.add_middleware(
 @app.get("/")
 def root():
     return {"message": "API funcionando"}
-
-# RUTA MANUAL OPCIONAL para OPTIONS si sigue dando 400
-@app.options("/generar")
-async def preflight_handler():
-    return JSONResponse(content={"ok": True}, status_code=200)
 
 @app.post("/generar")
 async def generar_articulo(request: Request):
@@ -36,10 +34,7 @@ async def generar_articulo(request: Request):
 
         ruta_archivo = generate_article(tema, nivel, pais)
         return FileResponse(ruta_archivo, filename="articulo_generado.docx")
-
+    
     except Exception as e:
         print(f"Error al generar el artículo: {str(e)}")
-        return JSONResponse(
-            status_code=500,
-            content={"error": f"No se pudo generar el artículo: {str(e)}"},
-        )
+        return {"error": f"No se pudo generar el artículo: {str(e)}"}
