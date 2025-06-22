@@ -55,7 +55,7 @@ def generate_article(tema, nivel, pais):
         f"Redacta un texto de 3 párrafos, c/u de 100 palabras, todo estilo scopus q1, sobre la problemática del artículo titulado '{titulo}'. "
         f"Cada párrafo es por un nivel: el primer párrafo nivel global o mundial, segundo nivel LATAM, tercero nivel nacional del país {pais}. "
         f"Cada párrafo debe tener 3 datos cuantitativos (solo uno porcentual, los otros 2 numericos, IMPORTANTEeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee). "
-        f"No incluyas citas ni menciones a instituciones ni ambigüedades como 'cerca de' o 'casi'. No uses conectores de cierre. "
+        f"No incluyas citas ni menciones a instituciones (IMPORTANTISIMO) ni ambigüedades como 'cerca de' o 'casi'. No uses conectores de cierre. "
         f"Cada párrafo debe iniciar mencionando el nivel (ejemplo: A nivel global, En Latinoamérica, En el contexto de {pais}). "
         f"Además, cada párrafo debe tener 2 datos cualitativos. TODA SOLO INFORMACION DE LOS ULTIMOS 5 AÑOS. importante, no uses la palabra \"CUALITATIVA\" ni similares"
     ))
@@ -78,7 +78,7 @@ def generate_article(tema, nivel, pais):
 
     # TEORÍA 1
     doc.add_paragraph(gpt(
-        f"A partir de esta investigación titulada '{titulo}', busca 2 teorías en las que se podría basar, y de ellas, de cada una, redacta un párrafo de 150 palabras que tenga en la primera oración una especie de preámbulo, y a partir de la segunda ya menciones el nombre de la teoría, el padre (principal propulsor) y de qué trata. Importante: no menciones el título de la investigación en ningún párrafo ni uses conectores de cierre. Sin subtítulos, todo prosa."
+        f"A partir de esta investigación titulada '{titulo}', busca 2 teorías en las que se podría basar, y de ellas, de cada una, redacta un párrafo de 150 palabras que tenga en la primera oración una especie de preámbulo, y a partir de la segunda ya menciones el nombre de la teoría, el padre (principal propulsor) y de qué trata. Importante: no menciones el título de la investigación en ningún párrafo ni uses conectores de cierre. Sin subtítulos, todo prosa. NO MENCIONES LIBROS. NO USES AMBIGUEDADES COMO, PODRIA SER, TODO EXACTO, EN VEZ DE PORDRIA SER, PON, ES. NO USES LAS PALABRAS, POR EJEMPLO, CRUCIAL"
     ))
     time.sleep(2)
 
