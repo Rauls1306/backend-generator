@@ -2,23 +2,21 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from generator import generate_article
-import os
 
 app = FastAPI()
 
-# Middleware CORS (habilita solicitudes desde el dominio de Vercel)
+# Habilitar CORS correctamente
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://frontend-generator-one.vercel.app"],
+    allow_origins=["https://frontend-generator-one.vercel.app"],  # EXACTO
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Ruta para preflight OPTIONS (necesaria para evitar 400 Bad Request)
 @app.options("/generar")
-async def preflight_handler():
-    return JSONResponse(status_code=200, content={"ok": True})
+async def preflight():
+    return JSONResponse(status_code=200, content={"message": "Preflight OK"})
 
 @app.get("/")
 def root():
