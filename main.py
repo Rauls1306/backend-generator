@@ -6,6 +6,7 @@ import os
 
 # Instalar versión correcta de OpenAI si es necesario
 os.system("pip install openai==0.28 --upgrade")
+# Forzar redeploy - sin impacto
 
 app = FastAPI()
 
