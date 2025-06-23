@@ -10,10 +10,10 @@ os.system("pip install openai==0.28 --upgrade")
 
 app = FastAPI()
 
-# Habilitar CORS con el dominio real de Vercel (sin barra al final)
+# Desbloqueo total de CORS para pruebas (luego puedes restringir)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://frontend-generator-one.vercel.app"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
