@@ -2,6 +2,7 @@ import openai
 import os
 import time
 from docx import Document
+from docx_writer import save_article_to_docx
 from datetime import datetime
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -140,3 +141,11 @@ def generate_article(tema, nivel, pais):
     filename = f"/tmp/articulo_{datetime.now().strftime('%Y%m%d%H%M%S')}.docx"
     save_article_to_docx(final_article, filename)
     return filename
+    
+from docx import Document
+
+def save_article_to_docx(text, filename):
+    doc = Document()
+    for paragraph in text.split("\n\n"):
+        doc.add_paragraph(paragraph)
+    doc.save(filename)
