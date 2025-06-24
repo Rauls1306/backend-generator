@@ -137,6 +137,9 @@ def generate_article(tema, nivel, pais):
 
     final_article = final_article.strip()  # ← ✅ Esto es nuevo
 
+    if not final_article:
+        raise ValueError("El contenido del artículo está vacío. No se generará el Word.")
+    
     filename = f"/tmp/articulo_{datetime.now().strftime('%Y%m%d%H%M%S')}.docx"
     save_article_to_docx(final_article, filename)
     return filename  
