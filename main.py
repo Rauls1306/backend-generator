@@ -34,7 +34,12 @@ async def generar_articulo(request: Request):
 
     try:
         ruta_archivo = generate_article(tema, nivel, pais)
-        return FileResponse(ruta_archivo, filename="articulo_generado.docx")
+return FileResponse(
+    ruta_archivo,
+    filename="articulo_generado.docx",
+    media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+)
+
     except Exception as e:
         print(f"Error: {str(e)}")
         return {"error": str(e)}
