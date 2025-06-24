@@ -135,17 +135,8 @@ def generate_article(tema, nivel, pais):
     for ref in reference_list:
         final_article += ref + "\n"
 
-    from docx_writer import save_article_to_docx
-    from datetime import datetime
+    final_article = final_article.strip()  # ← ✅ Esto es nuevo
 
     filename = f"/tmp/articulo_{datetime.now().strftime('%Y%m%d%H%M%S')}.docx"
     save_article_to_docx(final_article, filename)
-    return filename
-    
-from docx import Document
-
-def save_article_to_docx(text, filename):
-    doc = Document()
-    for paragraph in text.split("\n\n"):
-        doc.add_paragraph(paragraph)
-    doc.save(filename)
+    return filename  
