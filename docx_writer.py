@@ -1,10 +1,15 @@
 from docx import Document
-from docx.shared import Pt
 
-def save_article_to_docx(texto, ruta_salida):
-    doc = Document()
-    for parrafo in texto.split("\n\n"):
-        if parrafo.strip():
-            p = doc.add_paragraph(parrafo.strip())
-            p.style.font.size = Pt(11)
-    doc.save(ruta_salida)
+def save_article_to_docx(texto, ruta_archivo):
+    try:
+        doc = Document()
+        doc.add_heading("Artículo científico", 0)
+
+        for linea in texto.split("\n"):
+            if linea.strip():
+                doc.add_paragraph(linea.strip())
+
+        doc.save(ruta_archivo)
+    except Exception as e:
+        print("❌ Error al guardar el DOCX:", str(e))
+        raise e
