@@ -1,44 +1,54 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
-from generator import generate_article
+from pydantic import BaseModel
 import os
+import uuid
 
-# Instalar versión correcta de OpenAI si es necesario
-os.system("pip install openai==0.28 --upgrade")
+from generator import generate_article
+from docx_writer import save_article_to_docx
 
-# Forzar redeploy - sin impacto
 app = FastAPI()
 
-# Desbloqueo total de CORS para pruebas (luego puedes restringir)
+# Configurar CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"],  # En producción restringe esto
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-@app.get("/")
-def root():
-    return {"message": "API funcionando"}
+# Modelo de entrada
+class GeneradorInput(BaseModel):
+    nombre: str
+    pais: str
+    tipoArticulo: str
+    tema: str
 
-@app.post("/generar")
-async def generar_articulo(request: Request):
-    data = await request.json()
-    print("Datos recibidos:", data)
-
-    tema = data.get("tema")
-    nivel = data.get("nivel", "Scopus")
-    pais = data.get("pais", "Perú")
-
+@app.post("/generar-articulo")
+def generar_articulo(data: GeneradorInput):
     try:
-        ruta_archivo = generate_article(tema, nivel, pais)
-        return FileResponse(
-            ruta_archivo,
-            filename="articulo_generado.docx",
-            media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-        )
+        # Paso 1: Generar todo el contenido
+        resultado = generate_article(data.tema, data.tipoArticulo, data.pais)
+
+        # Paso 2: Guardar el documento Word
+        filename = f"{uuid.uuid4()}.docx"
+        output_dir = "./output"
+        os.makedirs(output_dir, exist_ok=True)
+        ruta_archivo = os.path.join(output_dir, filename)
+
+        save_article_to_docx(resultado["texto_articulo"], ruta_archivo)
+
+        # Paso 3: Devolver respuesta completa
+        return {
+            "titulo": resultado["titulo"],
+            "variable_1": resultado["variable_1"],
+            "variable_2": resultado["variable_2"],
+            "texto_articulo": resultado["texto_articulo"],
+            "archivo_generado": ruta_archivo
+        }
+
     except Exception as e:
-        print(f"Error: {str(e)}")
-        return {"error": str(e)}
+        print("❌ Error:", str(e))
+        raise HTTPException(status_code=500, detail=str(e))
+
