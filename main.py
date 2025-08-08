@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import os
@@ -6,6 +6,11 @@ import uuid
 
 from generator import generate_article
 from docx_writer import save_article_to_docx
+from dotenv import load_dotenv
+load_dotenv()
+
+print("API KEY:", openai.api_key)
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 app = FastAPI()
 
@@ -25,9 +30,18 @@ class GeneradorInput(BaseModel):
     tipoArticulo: str
     tema: str
 
+class ArticuloRequest(BaseModel):
+    tema: str
+    nivel: str
+    pais: str
+
 @app.post("/generar-articulo")
 def generar_articulo(data: GeneradorInput):
     try:
+        # 🟡 DEBUG: Verifica los datos recibidos
+        print("✅ Datos recibidos en el endpoint /generar-articulo:")
+        print(data.model_dump())
+
         # Paso 1: Generar todo el contenido
         resultado = generate_article(data.tema, data.tipoArticulo, data.pais)
 
@@ -49,6 +63,14 @@ def generar_articulo(data: GeneradorInput):
         }
 
     except Exception as e:
-        print("❌ Error:", str(e))
+        # 🔴 Imprimir el error para depurar
+        print("❌ Error durante la generación del artículo:")
+        print(str(e))
         raise HTTPException(status_code=500, detail=str(e))
 
+
+# @app.post("/generar-articulo")
+# async def generar_articulo(request: Request):
+#     body = await request.body()
+#     print("🧾 Body recibido crudo:", body.decode())
+#     return {"mensaje": "OK (solo para debug)"}
