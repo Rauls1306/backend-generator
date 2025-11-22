@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+python-docx
+openai==0.28
+python-dotenv
+google-search-results
+serpapi
+requests
+PyPDF2
+pandas
+openpyxl

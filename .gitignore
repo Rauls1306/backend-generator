@@ -1,0 +1,55 @@
+# ----------------------
+# Node.js
+# ----------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+.pnpm-debug.log
+
+# ----------------------
+# Python
+# ----------------------
+# Entornos virtuales
+.venv/
+.venv
+venv/
+.env/
+.env
+env/
+ENV/
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.pytest_cache/
+.pytest_cache/
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+
+# ----------------------
+# IDEs y editores
+# ----------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ----------------------
+# Sistema
+# ----------------------
+.DS_Store
+Thumbs.db
+
+# ----------------------
+# Archivos generados
+# ----------------------
+articulos/.env
+.env.backup
+.env
+.env.backup
